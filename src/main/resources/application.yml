@@ -10,7 +10,6 @@ springdoc:
   default-produces-media-type: application/json
 
 jwt:
-  secret: f8c9d73fef1b0ded9607aecdb7dc149a5ef31ca28a4bbbffe93894639932f1f3
   token-validity-in-milliseconds: 86400000 # 24??
 
 server:
@@ -21,7 +20,6 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/piggybank
     username: root
-    password: soup
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
