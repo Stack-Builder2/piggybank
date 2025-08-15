@@ -1,10 +1,10 @@
 package com.example.piggybank.domain.profile.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.example.piggybank.domain.profile.dto.ProfileReqDto;
+import com.example.piggybank.domain.profile.entity.Profile;
+import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-public class ProfileService {
+public interface ProfileService {
 
+    Profile updatePassword(ProfileReqDto request, String password);
 }

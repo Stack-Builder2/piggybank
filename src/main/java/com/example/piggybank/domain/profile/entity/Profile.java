@@ -11,6 +11,7 @@ import jakarta.persistence.Version;
 import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,4 +38,12 @@ public class Profile extends BaseTimeEntity {
     @Version
     private Long version;
 
+    @Builder
+    public Profile(UUID profileId, UUID userId, BigDecimal goal, BigDecimal limit, Long version) {
+        this.profileId = profileId;
+        this.userId = userId;
+        this.goal = goal;
+        this.limit = limit;
+        this.version = version;
+    }
 }
