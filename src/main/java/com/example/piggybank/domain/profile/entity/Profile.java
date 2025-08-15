@@ -1,0 +1,40 @@
+package com.example.piggybank.domain.profile.entity;
+
+import com.example.piggybank.global.common.BaseTimeEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Version;
+import java.math.BigDecimal;
+import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "profile_tb")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Profile extends BaseTimeEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "profile_id", updatable = false, nullable = false)
+    private UUID profileId;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
+
+    @Column(nullable = false)
+    private BigDecimal goal = BigDecimal.ZERO;
+
+    @Column(nullable = false)
+    private BigDecimal limit = BigDecimal.ZERO;
+
+    @Version
+    private Long version;
+
+}

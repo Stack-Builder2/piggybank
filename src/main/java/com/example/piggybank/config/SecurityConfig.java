@@ -38,7 +38,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/auth/**", "/h2-console/**",
                     "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
-                    "/swagger-resources/**", "/webjars/**").permitAll()
+                    "/swagger-resources/**", "/webjars/**",
+                    "/api/v1/email/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
