@@ -31,7 +31,7 @@ public class Profile extends BaseTimeEntity {
     @Column(nullable = false)
     private BigDecimal goal = BigDecimal.ZERO;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "`limit`")
     private BigDecimal limit = BigDecimal.ZERO;
 
     @Version
