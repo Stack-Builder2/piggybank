@@ -1,6 +1,6 @@
 package com.example.piggybank.global.email.controller;
 
-import com.example.piggybank.global.email.dto.EmailReqDto;
+import com.example.piggybank.global.email.dto.EmailRequest;
 import com.example.piggybank.global.email.service.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -20,11 +20,11 @@ public class EmailController {
 
     @Operation(summary = "이메일 발송", description = "JavaMailSender")
     @PostMapping("/send")
-    public ResponseEntity<String> sendEmail(@Valid @RequestBody EmailReqDto emailRequest) {
-        emailService.sendSimpleMessage(
+    public ResponseEntity<String> sendEmail(@Valid @RequestBody EmailRequest emailRequest) {
+        emailService.sendVerificationEmail(
             emailRequest.to(),
             emailRequest.subject(),
-            emailRequest.content()
+            emailRequest.verificationUrl()
         );
 
         return ResponseEntity.ok("이메일이 성공적으로 발송되었습니다.");

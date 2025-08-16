@@ -1,8 +1,8 @@
-package com.example.piggybank.domain.profile.dto;
+package com.example.piggybank.domain.profile.dto.resp;
 
 import java.util.UUID;
 
-public record ProfileRespDto(
+public record ProfileResponse(
     UUID profileId,
     String password,
     String ph

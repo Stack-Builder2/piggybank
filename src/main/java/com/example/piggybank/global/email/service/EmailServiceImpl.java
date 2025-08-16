@@ -7,12 +7,15 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender emailSender;
+    private final SpringTemplateEngine templateEngine;
 
     @Override
     public void sendSimpleMessage(String to, String subject, String text) {
@@ -46,5 +49,15 @@ public class EmailServiceImpl implements EmailService {
         } catch (MessagingException e) {
             throw new RuntimeException("HTML 이메일 발송 중 오류 발생", e);
         }
+    }
+
+    public void sendVerificationEmail(String to, String name, String verificationUrl) {
+        Context context = new Context();
+        context.setVariable("name", name);
+        context.setVariable("verificationUrl", verificationUrl);
+
+        String htmlContent = templateEngine.process("email-verification", context);
+
+        sendHtmlMessage(to, "이메일 인증 요청", htmlContent);
     }
 }

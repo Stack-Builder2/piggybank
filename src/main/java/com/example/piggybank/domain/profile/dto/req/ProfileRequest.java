@@ -1,9 +1,9 @@
-package com.example.piggybank.domain.profile.dto;
+package com.example.piggybank.domain.profile.dto.req;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record ProfileReqDto(
+public record ProfileRequest(
     @NotNull
     UUID userId
 ) {

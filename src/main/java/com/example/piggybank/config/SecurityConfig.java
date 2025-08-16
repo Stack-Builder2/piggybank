@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/**", "/h2-console/**",
                     "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
                     "/swagger-resources/**", "/webjars/**",
-                    "/api/v1/email/**").permitAll()
+                    "/api/v1/email/**", "/api/v1/sms/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
