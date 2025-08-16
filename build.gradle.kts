@@ -42,7 +42,13 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+	// JavaMailSender
 	implementation("org.springframework.boot:spring-boot-starter-mail")
+
+	// coolSMS
+	implementation("net.nurigo:sdk:4.3.2")
+
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 }
 
 tasks.withType<Test> {

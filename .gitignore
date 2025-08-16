@@ -38,3 +38,6 @@ out/
 
 ### yml 파일 ###
 /src/main/resources/application.yml
+
+### env 파일 ###
+.env
