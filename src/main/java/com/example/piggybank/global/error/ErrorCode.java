@@ -13,10 +13,11 @@ public enum ErrorCode {
   INTERNAL_SERVER_ERROR(500, "C006", "Server Error"),
 
   EMAIL_DUPLICATION(400, "U001", "Email is Duplicated"),
-  MEMBER_NOT_FOUND(404, "U002", "Member Not Found"),
+  USER_NOT_FOUND(404, "U002", "User Not Found"),
   PASSWORD_NOT_MATCH(400, "U003", "Password Not Match"),
 
   CATEGORY_NOT_FOUND(404, "CT001", "Category Not Found");
+
 
   private final int status;
   private final String code;
