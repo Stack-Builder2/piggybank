@@ -46,4 +46,12 @@ public class User extends BaseTimeEntity {
         this.ph = ph;
         this.version = version;
     }
+
+    public void updatePassword(String email, String newPassword) {
+        password = newPassword;
+    }
+
+    public void delete(String email) {
+        status = 99L;
+    }
 }

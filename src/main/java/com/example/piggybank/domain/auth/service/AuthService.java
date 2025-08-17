@@ -1,12 +1,14 @@
 package com.example.piggybank.domain.auth.service;
 
 import com.example.piggybank.domain.auth.dto.req.LoginRequest;
+import com.example.piggybank.domain.auth.dto.req.UserUpdateRequest;
 import com.example.piggybank.domain.auth.dto.resp.TokenResponse;
 import com.example.piggybank.domain.auth.entity.User;
 import com.example.piggybank.domain.auth.repository.UserRepository;
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import com.example.piggybank.global.security.JwtTokenProvider;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,5 +42,23 @@ public class AuthService {
             user.getEmail()
         );
         
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void changePassword(UserUpdateRequest request) {
+        User user = userRepository.findByEmail(request.email())
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+
+        String newPassword = passwordEncoder.encode(request.password());
+
+        user.updatePassword(request.email(), newPassword);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void softDeleteUser(String email) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+
+        user.delete(email);
     }
 }

@@ -46,4 +46,8 @@ public class Profile extends BaseTimeEntity {
         this.limit = limit;
         this.version = version;
     }
+
+    public void delete(UUID profileId) {
+        status = 99L;
+    }
 }
