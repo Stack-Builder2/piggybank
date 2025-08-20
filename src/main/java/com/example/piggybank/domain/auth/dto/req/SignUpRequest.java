@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NotBlank
 @NoArgsConstructor
 public class SignUpRequest {
 
