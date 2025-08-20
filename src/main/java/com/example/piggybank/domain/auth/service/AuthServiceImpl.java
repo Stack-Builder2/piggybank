@@ -9,6 +9,7 @@ import com.example.piggybank.domain.auth.repository.UserRepository;
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import com.example.piggybank.global.security.JwtTokenProvider;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,7 +72,6 @@ public class AuthServiceImpl implements AuthService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .ph(request.getPh())
-                .version(0L)
                 .build();
 
         userRepository.save(user);

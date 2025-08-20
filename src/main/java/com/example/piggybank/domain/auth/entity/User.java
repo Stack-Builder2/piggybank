@@ -20,10 +20,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID userId;
 
     @Column(nullable = false, unique = true)
@@ -39,12 +39,10 @@ public class User extends BaseTimeEntity {
     private Long version;
 
     @Builder
-    public User(UUID userId, String email, String password, String ph, Long version) {
-        this.userId = userId;
+    public User(String email, String password, String ph) {
         this.email = email;
         this.password = password;
         this.ph = ph;
-        this.version = version;
     }
 
     public void updatePassword(String email, String newPassword) {
