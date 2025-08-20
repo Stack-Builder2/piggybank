@@ -23,21 +23,6 @@ public class AuthServiceImpl implements AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     
-    @Transactional
-    public void signUp(SignUpRequest request) {
-        userRepository.findByEmail(request.getEmail())
-            .ifPresent(user -> { throw new IllegalArgumentException("이미 존재하는 이메일입니다."); });
-        
-        User user = User.builder()
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .ph(request.getPh())
-            .version(0L)
-            .build();
-        
-        userRepository.save(user);
-    }
-    
     @Transactional(readOnly = true)
     public TokenResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.email())
@@ -75,5 +60,20 @@ public class AuthServiceImpl implements AuthService {
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
         
         user.delete(email);
+    }
+
+    @Transactional
+    public void signUp(SignUpRequest request) {
+        userRepository.findByEmail(request.getEmail())
+                .ifPresent(user -> { throw new IllegalArgumentException("이미 존재하는 이메일입니다."); });
+
+        User user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .ph(request.getPh())
+                .version(0L)
+                .build();
+
+        userRepository.save(user);
     }
 }
