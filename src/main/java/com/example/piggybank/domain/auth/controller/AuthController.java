@@ -20,6 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
+    @Operation(summary = "회원가입", description = "이메일, 패스워드, 연락처로 회원가입합니다.")
+    @PostMapping("/signup")
+    public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest request){
+        authService.signUp(request);
+        return ResponseEntity.ok("회원가입 성공");
+    }
+
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest request){
         return ResponseEntity.ok(authService.login(request));
