@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-@NotNull
 @NotBlank
+@NoArgsConstructor
 public class SignUpRequest {
 
         @Email(message = "유효한 이메일 형식이 아닙니다.")

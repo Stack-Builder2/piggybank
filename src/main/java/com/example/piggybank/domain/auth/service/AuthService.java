@@ -61,4 +61,19 @@ public class AuthService {
 
         user.delete(email);
     }
+
+    @Transactional
+    public void signUp(SignUpRequest request) {
+        userRepository.findByEmail(request.getEmail())
+                .ifPresent(user -> { throw new IllegalArgumentException("이미 존재하는 이메일입니다."); });
+
+        User user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .ph(request.getPh())
+                .version(0L)
+                .build();
+
+        userRepository.save(user);
+    }
 }
