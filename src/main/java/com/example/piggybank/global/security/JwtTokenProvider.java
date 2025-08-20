@@ -6,6 +6,7 @@ package com.example.piggybank.global.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -16,6 +17,10 @@ import java.security.Key;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,19 +38,22 @@ public class JwtTokenProvider {
     private long tokenValidityInMilliSeconds;
     
     private Key key;
-    
-    private UserDetailsService userDetailsService;
+    private JwtParser jwtParser;
     
     @PostConstruct
     protected void init() {
-        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.jwtParser = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build();
     }
     
     // token 생성
     public String createToken(String email) {
         Claims claims = Jwts.claims().setSubject(email);
-//        claims.put("roles", role);
-//        권한 써야하나?
+        String role = email.equals("admin@test.com") ? "ROLE_ADMIN" : "ROLE_USER";
+        claims.put("roles", role);
         
         Date now = new Date();
         Date validity = new Date(now.getTime() + tokenValidityInMilliSeconds);
@@ -70,29 +78,20 @@ public class JwtTokenProvider {
     // token 유효성 검증
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
+            Jws<Claims> jws = jwtParser.parseClaimsJws(token);
+            return jws.getBody().getExpiration().after(new Date());
         } catch (Exception e) {
             return false;
         }
     }
     
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getEmail(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "",
-            userDetails.getAuthorities());
+    public String getEmail(String token) {
+        return jwtParser.parseClaimsJws(token).getBody().getSubject();
     }
     
-    public String getEmail(String token) {
-        return Jwts.parserBuilder()
-            .setSigningKey(key)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
+    public String getRole(String token) {
+        Object raw = jwtParser.parseClaimsJws(token).getBody().get("role");
+        return raw == null ? null : raw.toString();
     }
     
 }
