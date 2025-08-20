@@ -22,20 +22,7 @@ import com.example.piggybank.domain.auth.dto.req.UserUpdateRequest;
         user.delete(email);
     }
 
-    @Transactional
-    public void signUp(SignUpRequest request) {
-        userRepository.findByEmail(request.getEmail())
-                .ifPresent(user -> { throw new IllegalArgumentException("이미 존재하는 이메일입니다."); });
 
-        User user = User.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .ph(request.getPh())
-                .version(0L)
-                .build();
-
-        userRepository.save(user);
-    }
 public interface AuthService {
 
     public TokenResponse login(LoginRequest request);
@@ -43,4 +30,6 @@ public interface AuthService {
     public void changePassword(UserUpdateRequest request);
 
     public void softDeleteUser(String email);
+
+    public void signUp(SignUpRequest request);
 }
