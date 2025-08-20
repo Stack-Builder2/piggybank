@@ -1,6 +1,7 @@
 package com.example.piggybank.domain.auth.service;
 
 import com.example.piggybank.domain.auth.dto.req.LoginRequest;
+import com.example.piggybank.domain.auth.dto.req.SignUpRequest;
 import com.example.piggybank.domain.auth.dto.req.UserUpdateRequest;
 import com.example.piggybank.domain.auth.dto.resp.TokenResponse;
 import com.example.piggybank.domain.auth.entity.User;
@@ -21,6 +22,21 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    
+    @Transactional
+    public void signUp(SignUpRequest request) {
+        userRepository.findByEmail(request.getEmail())
+            .ifPresent(user -> { throw new IllegalArgumentException("이미 존재하는 이메일입니다."); });
+        
+        User user = User.builder()
+            .email(request.getEmail())
+            .password(passwordEncoder.encode(request.getPassword()))
+            .ph(request.getPh())
+            .version(0L)
+            .build();
+        
+        userRepository.save(user);
+    }
     
     @Transactional(readOnly = true)
     public TokenResponse login(LoginRequest request) {
