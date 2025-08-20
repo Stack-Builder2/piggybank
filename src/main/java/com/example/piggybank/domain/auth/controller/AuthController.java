@@ -1,6 +1,7 @@
 package com.example.piggybank.domain.auth.controller;
 
 import com.example.piggybank.domain.auth.dto.req.LoginRequest;
+import com.example.piggybank.domain.auth.dto.req.SignUpRequest;
 import com.example.piggybank.domain.auth.dto.req.UserUpdateRequest;
 import com.example.piggybank.domain.auth.dto.resp.TokenResponse;
 import com.example.piggybank.domain.auth.service.AuthService;
