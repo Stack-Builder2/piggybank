@@ -25,7 +25,6 @@ public class SignUpServiceImpl implements SignUpService {
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .ph(request.getPh())
-                .version(0L) // 또는 null로 넘겨도 버전은 자동 증가됨
                 .build();
 
         Profile profile = Profile.builder()

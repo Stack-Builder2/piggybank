@@ -37,6 +37,7 @@ public class AuthServiceImpl implements AuthService {
         }
         
         String token = jwtTokenProvider.createToken(
+            user.getUserId(),
             user.getEmail()
         );
         

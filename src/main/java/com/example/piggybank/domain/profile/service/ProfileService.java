@@ -11,9 +11,9 @@ public interface ProfileService {
     
     Profile updatePassword(ProfileRequest request, String password);
     
-    void addLimit(ProfileAddLimitRequest request);
+    void addLimit(String userId, ProfileAddLimitRequest request);
     
-    void addGoal(ProfileAddGoalRequest request);
+    void addGoal(String userId, ProfileAddGoalRequest request);
 
     ProfileResponse createProfile(ProfileRequest request);
 }

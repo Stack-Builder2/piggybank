@@ -11,6 +11,7 @@ import com.example.piggybank.domain.profile.dto.req.ProfileAddLimitRequest;
 import com.example.piggybank.domain.profile.repository.ProfileRepository;
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,19 +36,21 @@ public class ProfileServiceImpl implements ProfileService {
     }
     
     @Override
-    public void addLimit(ProfileAddLimitRequest request) {
-        User user = userRepository.findById(request.userId())
-            .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다."));
+    public void addLimit(String userId, ProfileAddLimitRequest request) {
+        Profile profile = profileRepository.findByUserId(UUID.fromString(userId))
+                .orElseThrow(() -> new EntityNotFoundException("프로필이 존재하지 않습니다."));
+        profile.setLimit(request.limit());
         
-        Profile profile = Profile.builder().limit(request.limit()).build();
+        profileRepository.save(profile);
     }
     
     @Override
-    public void addGoal(ProfileAddGoalRequest request) {
-        User user = userRepository.findById(request.userId())
-            .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다."));
+    public void addGoal(String userId, ProfileAddGoalRequest request) {
+        Profile profile = profileRepository.findByUserId(UUID.fromString(userId))
+            .orElseThrow(() -> new EntityNotFoundException("프로필이 존재하지 않습니다."));
+        profile.setGoal(request.goal());
         
-        Profile profile = Profile.builder().goal(request.goal()).build();
+        profileRepository.save(profile);
     }
 
     @Override
