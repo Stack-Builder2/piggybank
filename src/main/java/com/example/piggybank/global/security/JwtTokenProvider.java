@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -50,8 +51,8 @@ public class JwtTokenProvider {
     }
     
     // token 생성
-    public String createToken(String email) {
-        Claims claims = Jwts.claims().setSubject(email);
+    public String createToken(UUID userId, String email) {
+        Claims claims = Jwts.claims().setSubject(userId.toString());
         String role = email.equals("admin@test.com") ? "ROLE_ADMIN" : "ROLE_USER";
         claims.put("roles", role);
         
@@ -85,7 +86,7 @@ public class JwtTokenProvider {
         }
     }
     
-    public String getEmail(String token) {
+    public String getUserId(String token) {
         return jwtParser.parseClaimsJws(token).getBody().getSubject();
     }
     

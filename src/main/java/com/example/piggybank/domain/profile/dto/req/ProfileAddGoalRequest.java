@@ -7,9 +7,6 @@ import java.util.UUID;
 
 public record ProfileAddGoalRequest(
     @NotNull
-    UUID userId,
-    
-    @NotNull
     BigDecimal goal
 ) {
 

@@ -6,9 +6,6 @@ import java.util.UUID;
 
 public record ProfileAddLimitRequest(
     @NotNull
-    UUID userId,
-    
-    @NotNull
     BigDecimal limit
 ) {
 

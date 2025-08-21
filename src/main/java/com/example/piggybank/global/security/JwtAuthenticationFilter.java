@@ -49,14 +49,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             
             if (jwtTokenProvider.validateToken(token)) {
-                String email = jwtTokenProvider.getEmail(token);
+                String userId = jwtTokenProvider.getUserId(token);
                 String role = jwtTokenProvider.getRole(token);
                 
                 var authorities = (role == null || role.isBlank())
                     ? List.<SimpleGrantedAuthority>of()
                     : List.of(new SimpleGrantedAuthority(role));
                 
-                var auth = new UsernamePasswordAuthenticationToken(email, null, authorities);
+                var auth = new UsernamePasswordAuthenticationToken(userId, null, authorities);
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 
                 var context = SecurityContextHolder.createEmptyContext();
