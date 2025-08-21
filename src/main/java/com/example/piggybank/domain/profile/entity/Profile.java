@@ -23,10 +23,10 @@ public class Profile extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "profile_id", updatable = false, nullable = false)
+    @Column(name = "profile_id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")
     private UUID profileId;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID userId;
 
     @Column(nullable = false)
@@ -47,7 +47,15 @@ public class Profile extends BaseTimeEntity {
         this.version = version;
     }
 
-    public void delete(UUID profileId) {
+    public void delete(String email) {
         status = 99L;
+    }
+
+    public void updateGoal(UUID profileId, BigDecimal goal) {
+        this.goal = goal;
+    }
+
+    public void updateLimit(UUID profileId, BigDecimal limit) {
+        this.limit = limit;
     }
 }

@@ -14,16 +14,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "user_tb")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
+    @Column(name = "user_id", nullable = false, updatable = false, columnDefinition = "BINARY(16)")
     private UUID userId;
 
     @Column(nullable = false, unique = true)

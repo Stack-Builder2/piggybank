@@ -5,6 +5,7 @@ import com.example.piggybank.domain.auth.dto.req.SignUpRequest;
 import com.example.piggybank.domain.auth.dto.resp.TokenResponse;
 import com.example.piggybank.domain.auth.dto.req.UserUpdateRequest;
 import jakarta.validation.Valid;
+import java.util.UUID;
 
 public interface AuthService {
 
@@ -15,5 +16,5 @@ public interface AuthService {
     public void softDeleteUser(String email);
 
     public void signUp(SignUpRequest request);
-    
+
 }

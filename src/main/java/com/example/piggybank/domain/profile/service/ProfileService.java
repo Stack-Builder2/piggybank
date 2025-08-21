@@ -1,5 +1,6 @@
 package com.example.piggybank.domain.profile.service;
 
+import com.example.piggybank.domain.profile.dto.resp.ProfileResponse;
 import com.example.piggybank.domain.profile.entity.Profile;
 import com.example.piggybank.domain.profile.dto.req.ProfileRequest;
 import com.example.piggybank.domain.profile.dto.req.ProfileAddLimitRequest;
@@ -13,4 +14,6 @@ public interface ProfileService {
     void addLimit(ProfileAddLimitRequest request);
     
     void addGoal(ProfileAddGoalRequest request);
+
+    ProfileResponse createProfile(ProfileRequest request);
 }

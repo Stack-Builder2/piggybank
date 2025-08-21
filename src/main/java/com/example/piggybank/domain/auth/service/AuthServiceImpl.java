@@ -6,6 +6,8 @@ import com.example.piggybank.domain.auth.dto.req.UserUpdateRequest;
 import com.example.piggybank.domain.auth.dto.resp.TokenResponse;
 import com.example.piggybank.domain.auth.entity.User;
 import com.example.piggybank.domain.auth.repository.UserRepository;
+import com.example.piggybank.domain.profile.entity.Profile;
+import com.example.piggybank.domain.profile.repository.ProfileRepository;
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import com.example.piggybank.global.security.JwtTokenProvider;
@@ -23,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
     
     @Transactional(readOnly = true)
     public TokenResponse login(LoginRequest request) {
@@ -44,23 +47,27 @@ public class AuthServiceImpl implements AuthService {
         );
         
     }
-    
+
     @Transactional(rollbackFor = Exception.class)
     public void changePassword(UserUpdateRequest request) {
         User user = userRepository.findByEmail(request.email())
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
-        
+
         String newPassword = passwordEncoder.encode(request.password());
-        
+
         user.updatePassword(request.email(), newPassword);
     }
-    
+
     @Transactional(rollbackFor = Exception.class)
     public void softDeleteUser(String email) {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
-        
+
+        Profile profile = profileRepository.findByUserId(user.getUserId())
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+
         user.delete(email);
+        profile.delete(email);
     }
 
     @Transactional
@@ -75,5 +82,11 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         userRepository.save(user);
+
+        Profile profile = Profile.builder()
+            .userId(user.getUserId())
+            .build();
+
+        profileRepository.save(profile);
     }
 }
