@@ -1,0 +1,9 @@
+packages rules;
+
+rule "카페 거래"
+when
+    $t : com.example.drools.Transaction(description matches ".*(스타벅스|투썸|이디야).*")
+then
+    $t.setCategory("카페");
+    System.out.println($t.getDescription() + " -> 카페로 분류됨");
+end
