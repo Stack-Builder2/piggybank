@@ -7,29 +7,34 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "category_tb")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category extends BaseTimeEntity {
-
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "category_id", nullable = false, updatable = false, columnDefinition = "BINARY(16)")
-    private UUID categoryId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id", nullable = false)
+    private Long categoryId;
     
     @Column(nullable = false)
-    private String categoryName;
+    private String name;
+    
+    @Version
+    private Long version;
     
     @Builder
-    public Category(UUID categoryId, String categoryName) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
+    public Category(String name) {
+        this.name = name;
     }
 }
