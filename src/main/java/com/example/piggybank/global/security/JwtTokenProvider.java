@@ -54,7 +54,7 @@ public class JwtTokenProvider {
     public String createToken(UUID userId, String email) {
         Claims claims = Jwts.claims().setSubject(userId.toString());
         String role = email.equals("admin@test.com") ? "ROLE_ADMIN" : "ROLE_USER";
-        claims.put("roles", role);
+        claims.put("role", role);
         
         Date now = new Date();
         Date validity = new Date(now.getTime() + tokenValidityInMilliSeconds);

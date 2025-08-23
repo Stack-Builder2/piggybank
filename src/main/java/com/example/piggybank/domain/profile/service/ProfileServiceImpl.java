@@ -40,7 +40,6 @@ public class ProfileServiceImpl implements ProfileService {
         Profile profile = profileRepository.findByUserId(UUID.fromString(userId))
                 .orElseThrow(() -> new EntityNotFoundException("프로필이 존재하지 않습니다."));
         profile.setLimit(request.limit());
-        
         profileRepository.save(profile);
     }
     
