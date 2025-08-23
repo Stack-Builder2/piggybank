@@ -42,7 +42,7 @@ public class SecurityConfig {
                     "/api/v1/auth/login","/api/v1/auth/signup",
                     "/api/v1/email/**", "/api/v1/sms/**",
                     "/").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/category/create").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/v1/category/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
