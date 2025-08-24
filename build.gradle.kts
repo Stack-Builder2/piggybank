@@ -49,6 +49,12 @@ dependencies {
 	implementation("net.nurigo:sdk:4.3.2")
 
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+	// Python 연동
+	implementation("org.springframework.boot:spring-boot-starter-webflux") // WebClient
+
+	// (선택) 회로차단기
+	implementation("io.github.resilience4j:resilience4j-spring-boot3")
 }
 
 tasks.withType<Test> {
