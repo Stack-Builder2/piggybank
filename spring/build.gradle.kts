@@ -54,7 +54,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux") // WebClient
 
 	// (선택) 회로차단기
-	implementation("io.github.resilience4j:resilience4j-spring-boot3")
+	implementation("io.github.resilience4j:resilience4j-spring-boot3:2.0.2")
 }
 
 tasks.withType<Test> {
