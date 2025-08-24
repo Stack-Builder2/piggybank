@@ -1,0 +1,41 @@
+services:
+  spring-app:
+    build: ./spring
+    container_name: spring-app
+    ports:
+      - "8080:8080"
+    environment:
+      - PYTHON_BASE_URL=http://fastapi:8000
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/piggybank
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=soup
+    depends_on:
+      - fastapi
+      - db
+
+  fastapi:
+    build: ./python
+    container_name: fastapi
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./python/rules.xlsx:/app/rules.xlsx  # 개발 중 실시간 반영 가능
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.1
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: soup
+      MYSQL_DATABASE: piggybank
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
