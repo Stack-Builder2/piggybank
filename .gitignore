@@ -40,4 +40,4 @@ out/
 spring/src/main/resources/application.yml
 
 ### env 파일 ###
-.env
+spring/.env
