@@ -10,7 +10,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=soup
     env_file:
-      - ./.env
+      - ./spring/.env
     depends_on:
       - fastapi
       - db
