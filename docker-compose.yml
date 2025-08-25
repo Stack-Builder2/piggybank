@@ -30,7 +30,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: soup
       MYSQL_DATABASE: piggybank
-      MYSQL_USER: root
+      MYSQL_USER: piggybank_user
       MYSQL_PASSWORD: root
     ports:
       - "3307:3306"
