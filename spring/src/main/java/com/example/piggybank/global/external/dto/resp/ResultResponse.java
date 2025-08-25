@@ -1,9 +1,8 @@
 package com.example.piggybank.global.external.dto.resp;
 
-// Spring 분석 결과 항목
-public record BatchResponseItem(
+// Python 분석 결과
+public record ResultResponse(
     String id,
-    String description,
     String category
 ) {
 

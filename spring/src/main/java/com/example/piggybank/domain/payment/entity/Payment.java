@@ -33,7 +33,7 @@ public class Payment extends BaseTimeEntity {
     private UUID accountId;
 
     @Column(name = "category_id", nullable = false, columnDefinition = "BINARY(16)")
-    private UUID categoryId;
+    private Long categoryId;
 
     @Column(nullable = false)
     private BigDecimal amount = BigDecimal.ZERO;
@@ -51,7 +51,7 @@ public class Payment extends BaseTimeEntity {
     @Version
     private Long version;
 
-    public Payment(UUID accountId, UUID categoryId, BigDecimal amount,
+    public Payment(UUID accountId, Long categoryId, BigDecimal amount,
         LocalDateTime transactionDate,
         InputType inputType, String description) {
         this.accountId = accountId;
@@ -63,7 +63,3 @@ public class Payment extends BaseTimeEntity {
     }
 }
 
-enum InputType {
-    D,
-    W
-}

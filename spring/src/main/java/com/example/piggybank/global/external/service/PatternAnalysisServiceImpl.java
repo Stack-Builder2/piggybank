@@ -17,13 +17,8 @@ public class PatternAnalysisServiceImpl implements PatternAnalysisService{
     private final WebClient pythonClient;
 
     @Override
-    public BatchResponse analyzeDescriptions(List<String[]> descriptions) {
-        List<TxnRequest> items = descriptions.stream()
-            .map(arr -> new TxnRequest(arr[0], arr[1]))
-            .toList();
-
+    public BatchResponse analyzeDescriptions(List<TxnRequest> items) {
         BatchRequest request = new BatchRequest(items);
-
         return pythonClient.post()
             .uri("/analyze")
             .body(BodyInserters.fromValue(request))

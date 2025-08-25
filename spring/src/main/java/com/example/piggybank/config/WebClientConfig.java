@@ -12,10 +12,10 @@ public class WebClientConfig {
     private String pythonBaseUrl;
 
     @Bean
-    public WebClient pythonClient() {
-        return WebClient.builder()
+    public WebClient pythonClient(WebClient.Builder builder) {
+        return builder
             .baseUrl(pythonBaseUrl)
             .build();
     }
-
 }
+
