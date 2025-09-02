@@ -6,7 +6,7 @@ import java.util.UUID;
 import lombok.*;
 
 @Entity
-@Table(name = "member")
+@Table(name = "user")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,6 +35,10 @@ public class Member extends BaseTimeEntity {
 
     @Version
     private Long version;
+
+    public Member(UUID userId) {
+        this.userId = userId;
+    }
 
     public void updatePassword(String newPassword) {
         this.password = newPassword;

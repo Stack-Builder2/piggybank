@@ -7,6 +7,8 @@ import com.refactoring.piggybank.membermanagement.infrastructure.repository.Memb
 import com.refactoring.piggybank.global.error.ErrorCode;
 import com.refactoring.piggybank.global.error.exception.EntityNotFoundException;
 import com.refactoring.piggybank.global.security.JwtTokenProvider;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,20 +23,16 @@ public class MemberQueryService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public TokenResponse login(final LoginRequest request) {
-        final Member member = memberRepository.findByEmail(request.email())
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
 
-        if (!passwordEncoder.matches(request.password(), member.getPassword())) {
-            throw new BadCredentialsException("로그인에 실패하였습니다.");
-        }
+    public Optional<Member> findByMemberId(UUID userId) {
+        return memberRepository.findById(userId);
+    }
 
-        final String token = jwtTokenProvider.createToken(member.getUserId(), member.getEmail());
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
 
-        return new TokenResponse(
-                token,
-                "Bearer",
-                member.getEmail()
-        );
+    public boolean existByEmail(String email) {
+        return memberRepository.existByEmail(email);
     }
 }
