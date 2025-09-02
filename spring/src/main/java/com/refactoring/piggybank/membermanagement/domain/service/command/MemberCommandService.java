@@ -1,11 +1,15 @@
 package com.refactoring.piggybank.membermanagement.domain.service.command;
 
+import com.example.piggybank.global.security.JwtTokenProvider;
 import com.refactoring.piggybank.membermanagement.api.dto.request.SignUpRequest;
+import com.refactoring.piggybank.membermanagement.api.dto.response.TokenResponse;
 import com.refactoring.piggybank.membermanagement.domain.entity.Member;
 import com.refactoring.piggybank.membermanagement.domain.entity.Profile;
 import com.refactoring.piggybank.membermanagement.infrastructure.repository.MemberRepository;
 import com.refactoring.piggybank.global.error.ErrorCode;
 import com.refactoring.piggybank.global.error.exception.EntityNotFoundException;
+import java.util.Collections;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,40 +21,32 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberCommandService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public void signUp(final SignUpRequest request) {
-        memberRepository.findByEmail(request.getEmail())
-                .ifPresent(member -> {
-                    throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
-                });
+    public Member createMember(UUID userId) {
+        Member member = new Member(userId);
 
-        // 프로필 정보 초기화
-        final Profile newProfile = new Profile();
-        newProfile.setGoal("0");
-        newProfile.setLimit("0");
-
-        final Member member = Member.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .phoneNumber(request.getPhoneNumber())
-                .profile(newProfile)
-                .role(1) // USER 역할
-                .build();
-
-        memberRepository.save(member);
+        return memberRepository.save(member);
     }
 
-    public void changePassword(final String email, final String newPassword) {
-        final Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
-
-        final String encodedPassword = passwordEncoder.encode(newPassword);
-        member.updatePassword(encodedPassword);
+    public TokenResponse generateToken(UUID userId, String email) {
+        String token = jwtTokenProvider.createToken(
+            userId,
+            email
+        );
+        return new TokenResponse(
+            token,
+            "Bearer",
+            email
+        );
     }
 
-    public void softDeleteMember(final String email) {
-        final Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
-        member.softDelete();
+    public boolean validatePassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
+
+    public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
+
 }
