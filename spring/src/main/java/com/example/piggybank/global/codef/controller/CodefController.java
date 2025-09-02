@@ -1,6 +1,7 @@
 package com.example.piggybank.global.codef.controller;
 
 import com.example.piggybank.global.codef.dto.CodefAccessTokenResDto;
+import com.example.piggybank.global.codef.dto.CodefConnectedIdReqDto;
 import com.example.piggybank.global.codef.service.CodefService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,8 @@ public class CodefController {
     
     @Operation(summary = "Codef ConnectedId 발급", description = "AccessToken 필요")
     @PostMapping("/get/connectedId")
-    public ResponseEntity<String> getConnectedId() {
-        String connectedId = codefService.publishCodefConnectedId("1","@", "#")
+    public ResponseEntity<String> getConnectedId(CodefConnectedIdReqDto codefConnectedIdReqDto) {
+        String connectedId = codefService.publishCodefConnectedId(codefConnectedIdReqDto)
 ;
     return ResponseEntity.ok(connectedId);}
     

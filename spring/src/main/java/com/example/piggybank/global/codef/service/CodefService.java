@@ -1,8 +1,9 @@
 package com.example.piggybank.global.codef.service;
 
+import com.example.piggybank.global.codef.dto.CodefConnectedIdReqDto;
 import org.springframework.http.ResponseEntity;
 
 public interface CodefService {
     String publishCodefAccessToken();
-    String publishCodefConnectedId(String bank, String bankId, String bankPassword);
+    String publishCodefConnectedId(CodefConnectedIdReqDto codefConnectedIdReqDto);
 }
