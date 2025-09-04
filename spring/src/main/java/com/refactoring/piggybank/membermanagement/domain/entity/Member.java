@@ -27,8 +27,8 @@ public class Member extends BaseTimeEntity {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @Embedded
-    private Profile profile;
+//    @Embedded
+//    private Profile profile;
 
     @Column(name = "role", nullable = false)
     private int role; // 0: ADMIN, 1: USER
@@ -40,11 +40,11 @@ public class Member extends BaseTimeEntity {
         this.userId = userId;
     }
 
-    public void updatePassword(String newPassword) {
+    public void updatePassword(UUID userId, String newPassword) {
         this.password = newPassword;
     }
 
-    public void softDelete() {
+    public void softDelete(UUID userId) {
         this.status = 99L;
     }
 }
