@@ -1,8 +1,11 @@
 package com.example.piggybank.global.codef.service;
 
 import com.example.piggybank.global.codef.dto.CodefConnectedIdReqDto;
+import com.example.piggybank.global.codef.dto.CodefTransactionReqDto;
+import com.example.piggybank.global.codef.enums.BankType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PublicKey;
@@ -93,28 +96,38 @@ public class CodefServiceImpl implements CodefService {
         
         String bearerAuthValue = "Bearer " + reqDto.accessToken();
         
-        String encodedPassword = Base64.getEncoder().encodeToString(reqDto.bankPassword().getBytes(StandardCharsets.UTF_8));
+        String organizationCode = BankType.getCodeByName(reqDto.bankName());
+        
+        String encodedPassword = null;
+        
+        try {
+            encodedPassword = encryptPassword(reqDto.bankPassword());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         
         log.info("encodedPassword : " + encodedPassword);
         
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/x-www-form-urlencoded");
+        headers.add("Content-Type", "application/json");
         headers.add("Authorization", bearerAuthValue);
         
         Map<String, Object> account = new HashMap<>();
         account.put("countryCode", "KR");
         account.put("businessType", "BK");
         account.put("clientType", "P"); // 개인 : P / 기업 : B / 통합 : A
-        account.put("organization", "0004"); // 0004 = KB 국민은행
+        account.put("organization", organizationCode); // 0004 = KB 국민은행
         account.put("loginType", "1"); // 0: 인증서, 1: 아이디/패스워드
         account.put("id", reqDto.bankId());
         account.put("password", encodedPassword); // RSA 암호화 값
         
         // accountList 배열에 담기
-        Map<String, Object> body = new HashMap<>();
+        LinkedMultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.put("accountList", Collections.singletonList(account));
         
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+        HttpEntity<LinkedMultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
+        
+        log.info("entity : " + entity);
         
         RestTemplate rt = new RestTemplate();
         
@@ -124,11 +137,48 @@ public class CodefServiceImpl implements CodefService {
             entity,
             String.class //{요청시 반환되는 데이터 타입}
         );
+        String decodedResponse = URLDecoder.decode(response.getBody(), StandardCharsets.UTF_8);
         
-        return response.getBody();
-        
+        return decodedResponse;
     }
     
+    @Override
+    public String getCodefTransactions(CodefTransactionReqDto reqDto) {
+        
+        String bearerAuthValue = "Bearer " + reqDto.accessToken();
+        
+        String organizationCode = BankType.getCodeByName(reqDto.organization());
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        headers.add("Authorization", bearerAuthValue);
+        
+        log.info("headers : " + headers);
+        
+        Map<String, Object> body = new HashMap<>();
+        body.put("connectedId", reqDto.connectedId());
+        body.put("organization", organizationCode);
+        body.put("account", reqDto.accountNumber());
+        body.put("startDate", reqDto.startDate());
+        body.put("endDate", reqDto.endDate());
+        body.put("orderBy", "0");
+        body.put("inquiryType","1");
+        body.put("clientType","P");
+        
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+        
+        RestTemplate rt = new RestTemplate();
+        
+        ResponseEntity<String> response = rt.exchange(
+            "https://development.codef.io/v1/kr/bank/p/account/transaction-list",
+            HttpMethod.POST, //{요청할 방식}
+            entity,
+            String.class //{요청시 반환되는 데이터 타입}
+        );
+        String decodedResponse = URLDecoder.decode(response.getBody(), StandardCharsets.UTF_8);
+        
+        return decodedResponse;
+    }
     
     
     public String encryptPassword(String password) throws Exception {

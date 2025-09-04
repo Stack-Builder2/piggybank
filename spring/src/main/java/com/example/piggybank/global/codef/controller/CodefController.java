@@ -2,6 +2,7 @@ package com.example.piggybank.global.codef.controller;
 
 import com.example.piggybank.global.codef.dto.CodefAccessTokenResDto;
 import com.example.piggybank.global.codef.dto.CodefConnectedIdReqDto;
+import com.example.piggybank.global.codef.dto.CodefTransactionReqDto;
 import com.example.piggybank.global.codef.service.CodefService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,14 @@ public class CodefController {
     @Operation(summary = "Codef ConnectedId 발급", description = "AccessToken 필요")
     @PostMapping("/get/connectedId")
     public ResponseEntity<String> getConnectedId(CodefConnectedIdReqDto codefConnectedIdReqDto) {
-        String connectedId = codefService.publishCodefConnectedId(codefConnectedIdReqDto)
-;
+        String connectedId = codefService.publishCodefConnectedId(codefConnectedIdReqDto);
     return ResponseEntity.ok(connectedId);}
     
+    
+    @Operation(summary = "Codef 계좌 거래내역 조회", description = "AccessToken, ConnectedId 필요")
+    @PostMapping("/get/transaction")
+    public ResponseEntity<String> getTransaction(CodefTransactionReqDto codefTransactionReqDto) {
+        String transaction = codefService.getCodefTransactions(codefTransactionReqDto);
+        return ResponseEntity.ok(transaction);
+    }
 }

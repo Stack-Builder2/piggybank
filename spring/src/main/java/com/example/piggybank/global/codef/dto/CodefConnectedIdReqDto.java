@@ -1,6 +1,7 @@
 package com.example.piggybank.global.codef.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 public record CodefConnectedIdReqDto (
@@ -10,6 +11,7 @@ public record CodefConnectedIdReqDto (
     @NotBlank(message = "은행 아이디가 비었습니다.")
     String bankId,
     
+    @NotNull
     @NotBlank(message = "은행 비밀번호가 비었습니다.")
     String bankPassword,
     

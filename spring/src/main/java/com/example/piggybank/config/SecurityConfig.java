@@ -43,6 +43,7 @@ public class SecurityConfig {
                     "/api/v1/email/**", "/api/v1/sms/**",
                     "/api/v1/codef/**",
                     "/").permitAll()
+                .requestMatchers(HttpMethod.POST,"api/v1/codef/**").hasRole("USER")
                 .requestMatchers(HttpMethod.POST, "/api/v1/category/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
