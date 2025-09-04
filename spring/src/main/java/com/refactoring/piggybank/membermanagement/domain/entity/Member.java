@@ -36,8 +36,11 @@ public class Member extends BaseTimeEntity {
     @Version
     private Long version;
 
-    public Member(UUID userId) {
-        this.userId = userId;
+    public Member(String email, String password, String phoneNumber, int role) {
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 
     public void updatePassword(UUID userId, String newPassword) {

@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface MemberCommandService {
 
-    Member createMember(UUID userId);
+    Member createMember(String email, String password, String phoneNumber, int role);
     TokenResponse generateToken(UUID userId, String email);
     boolean validatePassword(String rawPassword, String encodedPassword);
     String encodePassword(String rawPassword);

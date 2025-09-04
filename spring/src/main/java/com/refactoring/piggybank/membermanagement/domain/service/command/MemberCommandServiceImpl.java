@@ -18,8 +18,13 @@ public class MemberCommandServiceImpl implements MemberCommandService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public Member createMember(UUID userId) {
-        Member member = new Member(userId);
+    public Member createMember(String email, String password, String phoneNumber, int role) {
+        Member member = Member.builder()
+            .email(email)
+            .password(password)
+            .phoneNumber(phoneNumber)
+            .role(1)
+            .build();
 
         return memberRepository.save(member);
     }
