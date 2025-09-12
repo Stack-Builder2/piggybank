@@ -1,9 +1,9 @@
-package com.example.piggybank.global.external.dto.resp;
+package com.refactoring.piggybank.global.external.dto.resp;
 
 import com.example.piggybank.domain.payment.entity.InputType;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 public record PaymentAnalyzeResponse(

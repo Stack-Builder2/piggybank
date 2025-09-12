@@ -1,4 +1,4 @@
-package com.example.piggybank.global.error;
+package com.refactoring.piggybank.global.error;
 
 import lombok.Getter;
 
@@ -16,8 +16,9 @@ public enum ErrorCode {
   USER_NOT_FOUND(404, "U002", "User Not Found"),
   PASSWORD_NOT_MATCH(400, "U003", "Password Not Match"),
 
-  CATEGORY_NOT_FOUND(404, "CT001", "Category Not Found");
+  CATEGORY_NOT_FOUND(404, "CT001", "Category Not Found"),
 
+  INVALID_TOKEN(400, "T001", "Invalid Token Value");
 
   private final int status;
   private final String code;

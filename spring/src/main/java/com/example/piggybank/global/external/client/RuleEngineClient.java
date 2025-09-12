@@ -1,4 +1,4 @@
-package com.example.piggybank.global.external.client;
+package com.refactoring.piggybank.global.external.client;
 
 public class RuleEngineClient {
 

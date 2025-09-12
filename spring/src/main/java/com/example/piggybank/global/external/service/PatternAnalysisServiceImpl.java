@@ -1,18 +1,18 @@
-package com.example.piggybank.global.external.service;
+package com.refactoring.piggybank.global.external.service;
 
-import com.example.piggybank.global.external.dto.req.BatchRequest;
-import com.example.piggybank.global.external.dto.req.TxnRequest;
-import com.example.piggybank.global.external.dto.resp.BatchResponse;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.refactoring.piggybank.global.external.dto.req.BatchRequest;
+import com.refactoring.piggybank.global.external.dto.req.TxnRequest;
+import com.refactoring.piggybank.global.external.dto.resp.BatchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class PatternAnalysisServiceImpl implements PatternAnalysisService{
+public class PatternAnalysisServiceImpl implements PatternAnalysisService {
 
     private final WebClient pythonClient;
 
