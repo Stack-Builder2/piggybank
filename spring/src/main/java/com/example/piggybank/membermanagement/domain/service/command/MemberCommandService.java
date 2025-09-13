@@ -1,7 +1,7 @@
-package com.refactoring.piggybank.membermanagement.domain.service.command;
+package com.example.piggybank.membermanagement.domain.service.command;
 
-import com.refactoring.piggybank.membermanagement.api.dto.response.TokenResponse;
-import com.refactoring.piggybank.membermanagement.domain.entity.Member;
+import com.example.piggybank.membermanagement.api.dto.response.TokenResponse;
+import com.example.piggybank.membermanagement.domain.entity.Member;
 import java.util.UUID;
 
 public interface MemberCommandService {

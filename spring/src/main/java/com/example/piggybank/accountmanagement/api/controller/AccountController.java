@@ -1,9 +1,9 @@
-package com.refactoring.piggybank.accountmanagement.api.controller;
+package com.example.piggybank.accountmanagement.api.controller;
 
-import com.refactoring.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
-import com.refactoring.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
-import com.refactoring.piggybank.accountmanagement.api.dto.response.AccountResponse;
-import com.refactoring.piggybank.accountmanagement.domain.service.AccountCommandService;
+import com.example.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
+import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
+import com.example.piggybank.accountmanagement.api.dto.response.AccountResponse;
+import com.example.piggybank.accountmanagement.domain.service.AccountCommandService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/v1/account")
+@RestController("managementAccountController")
+@RequestMapping("/api/v2/account")
 @RequiredArgsConstructor
 public class AccountController {
 

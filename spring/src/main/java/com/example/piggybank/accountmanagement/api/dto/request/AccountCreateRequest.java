@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.accountmanagement.api.dto.request;
+package com.example.piggybank.accountmanagement.api.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 

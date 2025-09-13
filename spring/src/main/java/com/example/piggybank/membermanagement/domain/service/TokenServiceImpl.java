@@ -1,7 +1,5 @@
-package com.refactoring.piggybank.membermanagement.domain.service;
+package com.example.piggybank.membermanagement.domain.service;
 
-import com.refactoring.piggybank.membermanagement.domain.entity.Token;
-import com.refactoring.piggybank.membermanagement.infrastructure.repository.TokenRepository;
 import java.time.Duration;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

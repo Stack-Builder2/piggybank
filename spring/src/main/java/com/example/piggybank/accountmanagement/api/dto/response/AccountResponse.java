@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.accountmanagement.api.dto.response;
+package com.example.piggybank.accountmanagement.api.dto.response;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.UUID;

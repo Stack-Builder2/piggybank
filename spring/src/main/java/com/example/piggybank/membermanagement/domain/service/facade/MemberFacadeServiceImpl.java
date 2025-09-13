@@ -1,17 +1,17 @@
-package com.refactoring.piggybank.membermanagement.domain.service.facade;
+package com.example.piggybank.membermanagement.domain.service.facade;
 
-import static com.refactoring.piggybank.global.error.ErrorCode.*;
+import static com.example.piggybank.global.error.ErrorCode.*;
 
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
-import com.refactoring.piggybank.global.error.exception.BusinessException;
-import com.refactoring.piggybank.membermanagement.api.dto.request.LoginRequest;
-import com.refactoring.piggybank.membermanagement.api.dto.request.SignUpRequest;
-import com.refactoring.piggybank.membermanagement.api.dto.request.UserUpdateRequest;
-import com.refactoring.piggybank.membermanagement.api.dto.response.TokenResponse;
-import com.refactoring.piggybank.membermanagement.domain.entity.Member;
-import com.refactoring.piggybank.membermanagement.domain.service.command.MemberCommandService;
-import com.refactoring.piggybank.membermanagement.domain.service.query.MemberQueryService;
+import com.example.piggybank.global.error.exception.BusinessException;
+import com.example.piggybank.membermanagement.api.dto.request.LoginRequest;
+import com.example.piggybank.membermanagement.api.dto.request.SignUpRequest;
+import com.example.piggybank.membermanagement.api.dto.request.UserUpdateRequest;
+import com.example.piggybank.membermanagement.api.dto.response.TokenResponse;
+import com.example.piggybank.membermanagement.domain.entity.Member;
+import com.example.piggybank.membermanagement.domain.service.command.MemberCommandService;
+import com.example.piggybank.membermanagement.domain.service.query.MemberQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;

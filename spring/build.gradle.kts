@@ -33,14 +33,19 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
-	
+
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
-	
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.redisson:redisson-spring-boot-starter:3.27.1")
+	implementation("org.springframework.boot:spring-boot-starter-cache")
+	implementation("org.springframework.session:spring-session-data-redis")
 
 	// JavaMailSender
 	implementation("org.springframework.boot:spring-boot-starter-mail")

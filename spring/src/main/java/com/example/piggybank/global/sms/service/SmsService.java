@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.global.sms.service;
+package com.example.piggybank.global.sms.service;
 
 public interface SmsService {
 

@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.membermanagement.domain.service;
+package com.example.piggybank.membermanagement.domain.service;
 
 
 public interface PasswordChangeService {

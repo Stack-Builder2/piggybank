@@ -1,14 +1,14 @@
-package com.refactoring.piggybank.membermanagement.domain.service;
+package com.example.piggybank.membermanagement.domain.service;
 
-import static com.refactoring.piggybank.global.error.ErrorCode.*;
+import static com.example.piggybank.global.error.ErrorCode.*;
 
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
-import com.refactoring.piggybank.global.error.exception.BusinessException;
-import com.refactoring.piggybank.membermanagement.domain.entity.Member;
-import com.refactoring.piggybank.membermanagement.domain.service.query.MemberQueryService;
-import com.refactoring.piggybank.membermanagement.infrastructure.event.PasswordChangeSuccessEvent;
-import com.refactoring.piggybank.membermanagement.infrastructure.event.PasswordChangedEmailEvent;
+import com.example.piggybank.global.error.exception.BusinessException;
+import com.example.piggybank.membermanagement.domain.entity.Member;
+import com.example.piggybank.membermanagement.domain.service.query.MemberQueryService;
+import com.example.piggybank.membermanagement.infrastructure.event.PasswordChangeSuccessEvent;
+import com.example.piggybank.membermanagement.infrastructure.event.PasswordChangedEmailEvent;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

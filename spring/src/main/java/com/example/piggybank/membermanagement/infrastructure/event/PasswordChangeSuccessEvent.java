@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.membermanagement.infrastructure.event;
+package com.example.piggybank.membermanagement.infrastructure.event;
 
 import java.util.UUID;
 import lombok.Getter;

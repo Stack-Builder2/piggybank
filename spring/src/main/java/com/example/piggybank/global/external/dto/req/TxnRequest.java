@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.global.external.dto.req;
+package com.example.piggybank.global.external.dto.req;
 
 // 분석할 거래 1건
 public record TxnRequest(

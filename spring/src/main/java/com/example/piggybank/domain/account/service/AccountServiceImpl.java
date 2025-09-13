@@ -4,14 +4,12 @@ import com.example.piggybank.domain.account.dto.req.AccountCreateRequest;
 import com.example.piggybank.domain.account.dto.req.AccountUpdateRequest;
 import com.example.piggybank.domain.account.dto.resp.AccountResponse;
 import com.example.piggybank.domain.account.entity.Account;
-import com.example.piggybank.domain.account.repository.AccountRepository;
+import com.example.piggybank.domain.account.repository.DomainAccountRepository;
 import com.example.piggybank.domain.auth.entity.User;
 import com.example.piggybank.domain.auth.repository.UserRepository;
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
-import java.util.List;
 import java.util.UUID;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountServiceImpl implements AccountService {
 
     private final UserRepository userRepository;
-    private final AccountRepository accountRepository;
+    private final DomainAccountRepository accountRepository;
 
     @Override
     public AccountResponse createAccount(String userId, AccountCreateRequest request) {

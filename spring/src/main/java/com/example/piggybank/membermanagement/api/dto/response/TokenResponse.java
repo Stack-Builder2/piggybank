@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.membermanagement.api.dto.response;
+package com.example.piggybank.membermanagement.api.dto.response;
 
 public record TokenResponse(
         String accessToken,

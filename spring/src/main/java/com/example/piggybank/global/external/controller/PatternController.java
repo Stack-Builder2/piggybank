@@ -1,8 +1,8 @@
-package com.refactoring.piggybank.global.external.controller;
+package com.example.piggybank.global.external.controller;
 
-import com.refactoring.piggybank.global.external.dto.req.BatchRequest;
-import com.refactoring.piggybank.global.external.dto.resp.BatchResponse;
-import com.refactoring.piggybank.global.external.service.PatternAnalysisService;
+import com.example.piggybank.global.external.dto.req.BatchRequest;
+import com.example.piggybank.global.external.dto.resp.BatchResponse;
+import com.example.piggybank.global.external.service.PatternAnalysisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

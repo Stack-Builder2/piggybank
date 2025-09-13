@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.global.external.dto.req;
+package com.example.piggybank.global.external.dto.req;
 
 import java.util.List;
 

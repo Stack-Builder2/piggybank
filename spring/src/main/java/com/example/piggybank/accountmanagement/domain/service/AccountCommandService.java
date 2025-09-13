@@ -1,11 +1,11 @@
-package com.refactoring.piggybank.accountmanagement.domain.service;
+package com.example.piggybank.accountmanagement.domain.service;
 
-import com.refactoring.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
-import com.refactoring.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
-import com.refactoring.piggybank.accountmanagement.api.dto.response.AccountResponse;
-import com.refactoring.piggybank.accountmanagement.domain.entity.Account;
-import com.refactoring.piggybank.accountmanagement.infrastructure.repository.AccountRepository;
-import com.refactoring.piggybank.global.error.exception.EntityNotFoundException;
+import com.example.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
+import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
+import com.example.piggybank.accountmanagement.api.dto.response.AccountResponse;
+import com.example.piggybank.accountmanagement.domain.entity.Account;
+import com.example.piggybank.accountmanagement.infrastructure.repository.AccountRepository;
+import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

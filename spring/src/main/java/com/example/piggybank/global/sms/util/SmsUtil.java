@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.global.sms.util;
+package com.example.piggybank.global.sms.util;
 
 import jakarta.annotation.PostConstruct;
 import net.nurigo.sdk.NurigoApp;

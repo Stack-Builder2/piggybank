@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.global.external.dto.resp;
+package com.example.piggybank.global.external.dto.resp;
 
 import com.example.piggybank.domain.payment.entity.InputType;
 

@@ -1,6 +1,6 @@
-package com.refactoring.piggybank.accountmanagement.domain.entity;
+package com.example.piggybank.accountmanagement.domain.entity;
 
-import com.refactoring.piggybank.global.common.BaseTimeEntity;
+import com.example.piggybank.global.common.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "AccountManagement")
 @Table(name = "account")
 @Getter
 @Setter

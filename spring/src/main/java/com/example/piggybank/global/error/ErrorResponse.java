@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.global.error;
+package com.example.piggybank.global.error;
 
 import lombok.AccessLevel;
 import lombok.Getter;

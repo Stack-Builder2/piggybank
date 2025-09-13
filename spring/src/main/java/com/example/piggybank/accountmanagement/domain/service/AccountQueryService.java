@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.accountmanagement.domain.service;
+package com.example.piggybank.accountmanagement.domain.service;
 
 import org.springframework.stereotype.Service;
 

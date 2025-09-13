@@ -1,6 +1,6 @@
-package com.refactoring.piggybank.global.error.exception;
+package com.example.piggybank.global.error.exception;
 
-import com.refactoring.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.ErrorCode;
 
 public class EntityNotFoundException extends BusinessException {
 

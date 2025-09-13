@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.global.common;
+package com.example.piggybank.global.common;
 
 
 import jakarta.persistence.Column;

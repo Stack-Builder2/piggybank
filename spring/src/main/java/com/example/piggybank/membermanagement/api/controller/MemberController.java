@@ -1,10 +1,10 @@
-package com.refactoring.piggybank.membermanagement.api.controller;
+package com.example.piggybank.membermanagement.api.controller;
 
-import com.refactoring.piggybank.membermanagement.api.dto.request.LoginRequest;
-import com.refactoring.piggybank.membermanagement.api.dto.request.SignUpRequest;
-import com.refactoring.piggybank.membermanagement.api.dto.request.UserUpdateRequest;
-import com.refactoring.piggybank.membermanagement.api.dto.response.TokenResponse;
-import com.refactoring.piggybank.membermanagement.domain.service.facade.MemberFacadeServiceImpl;
+import com.example.piggybank.membermanagement.api.dto.request.LoginRequest;
+import com.example.piggybank.membermanagement.api.dto.request.SignUpRequest;
+import com.example.piggybank.membermanagement.api.dto.request.UserUpdateRequest;
+import com.example.piggybank.membermanagement.api.dto.response.TokenResponse;
+import com.example.piggybank.membermanagement.domain.service.facade.MemberFacadeServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/v1/auth")
+@RestController("memberAccountController")
+@RequestMapping("/api/v2/auth")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberFacadeServiceImpl memberService;

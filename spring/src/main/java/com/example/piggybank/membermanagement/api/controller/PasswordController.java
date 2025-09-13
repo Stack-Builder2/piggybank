@@ -1,10 +1,10 @@
-package com.refactoring.piggybank.membermanagement.api.controller;
+package com.example.piggybank.membermanagement.api.controller;
 
-import com.refactoring.piggybank.global.email.service.EmailService;
-import com.refactoring.piggybank.membermanagement.api.dto.request.PasswordChangeRequest;
-import com.refactoring.piggybank.membermanagement.api.dto.request.ResetRequest;
-import com.refactoring.piggybank.membermanagement.domain.service.PasswordChangeService;
-import com.refactoring.piggybank.membermanagement.domain.service.TokenService;
+import com.example.piggybank.global.email.service.EmailService;
+import com.example.piggybank.membermanagement.api.dto.request.PasswordChangeRequest;
+import com.example.piggybank.membermanagement.api.dto.request.ResetRequest;
+import com.example.piggybank.membermanagement.domain.service.PasswordChangeService;
+import com.example.piggybank.membermanagement.domain.service.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/password")
+@RequestMapping("/api/v2/password")
 public class PasswordController {
 
     private final TokenService tokenService;
@@ -59,7 +59,7 @@ public class PasswordController {
 
     @PostMapping("/request-reset")
     public ResponseEntity<?> requestReset(@RequestBody ResetRequest request) {
-        emailService.passwordChangedEmail(request.email(), request.name());
+        emailService.passwordChangedEmail(request.email());
         return ResponseEntity.ok(Map.of("message", "비밀번호 변경 인증 이메일이 발송되었습니다."));
     }
 

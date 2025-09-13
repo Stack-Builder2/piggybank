@@ -1,8 +1,8 @@
-package com.refactoring.piggybank.membermanagement.domain.service.query;
+package com.example.piggybank.membermanagement.domain.service.query;
 
-import com.refactoring.piggybank.membermanagement.domain.entity.Member;
-import com.refactoring.piggybank.membermanagement.infrastructure.repository.MemberRepository;
-import com.refactoring.piggybank.global.security.JwtTokenProvider;
+import com.example.piggybank.membermanagement.domain.entity.Member;
+import com.example.piggybank.membermanagement.infrastructure.repository.MemberRepository;
+import com.example.piggybank.global.security.JwtTokenProvider;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,6 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     }
 
     public boolean existByEmail(String email) {
-        return memberRepository.existByEmail(email);
+        return memberRepository.existsByEmail(email);
     }
 }

@@ -1,6 +1,6 @@
-package com.refactoring.piggybank.global.email.service;
+package com.example.piggybank.global.email.service;
 
-import com.refactoring.piggybank.membermanagement.domain.service.TokenService;
+import com.example.piggybank.membermanagement.domain.service.TokenService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.time.Duration;
@@ -54,9 +54,8 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    public void sendVerificationEmail(String to, String name, String verificationUrl) {
+    public void sendVerificationEmail(String to, String verificationUrl) {
         Context context = new Context();
-        context.setVariable("name", name);
         context.setVariable("verificationUrl", verificationUrl);
 
         String htmlContent = templateEngine.process("email-verification", context);
@@ -64,12 +63,11 @@ public class EmailServiceImpl implements EmailService {
         sendHtmlMessage(to, "이메일 인증 요청", htmlContent);
     }
 
-    public void passwordChangedEmail(String to, String name) {
+    public void passwordChangedEmail(String to) {
         String token = tokenService.saveTempToken(to, Duration.ofMinutes(10));
         String verificationUrl = "http://localhost:8080/password/verify?token=" + token;
 
         Context context = new Context();
-        context.setVariable("name", name);
         context.setVariable("verificationUrl", verificationUrl);
 
         String htmlContent = templateEngine.process("email-verification", context);

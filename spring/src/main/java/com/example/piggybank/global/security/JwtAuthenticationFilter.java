@@ -1,4 +1,4 @@
-package com.refactoring.piggybank.global.security;
+package com.example.piggybank.global.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

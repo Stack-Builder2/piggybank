@@ -1,6 +1,6 @@
-package com.refactoring.piggybank.membermanagement.domain.entity;
+package com.example.piggybank.membermanagement.domain.entity;
 
-import com.refactoring.piggybank.global.common.BaseTimeEntity;
+import com.example.piggybank.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import java.util.UUID;
 import lombok.*;

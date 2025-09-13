@@ -2,7 +2,6 @@ package com.example.piggybank.config;
 
 import com.example.piggybank.global.security.JwtAuthenticationFilter;
 import com.example.piggybank.global.security.JwtTokenProvider;
-import jakarta.servlet.Filter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +40,7 @@ public class SecurityConfig {
                     "/swagger-resources/**", "/webjars/**",
                     "/api/v1/auth/login","/api/v1/auth/signup",
                     "/api/v1/email/**", "/api/v1/sms/**",
-                    "/api/v1/codef/**",
+                    "/api/v1/codef/**", "/api/v2/auth/**",
                     "/").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/category/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

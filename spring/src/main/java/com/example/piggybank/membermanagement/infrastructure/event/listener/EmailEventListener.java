@@ -1,10 +1,8 @@
-package com.refactoring.piggybank.membermanagement.infrastructure.event.listener;
+package com.example.piggybank.membermanagement.infrastructure.event.listener;
 
-import com.refactoring.piggybank.global.email.service.EmailService;
-import com.refactoring.piggybank.membermanagement.infrastructure.event.PasswordChangeSuccessEvent;
-import com.refactoring.piggybank.membermanagement.infrastructure.event.PasswordChangedEmailEvent;
+import com.example.piggybank.global.email.service.EmailService;
+import com.example.piggybank.membermanagement.infrastructure.event.PasswordChangedEmailEvent;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +17,6 @@ public class EmailEventListener {
 
         emailService.sendVerificationEmail(
             event.getTo(),
-            "비밀번호 재설정 요청",
             event.getVerificationUrl()
         );
 

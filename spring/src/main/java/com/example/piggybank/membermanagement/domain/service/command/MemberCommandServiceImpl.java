@@ -1,9 +1,9 @@
-package com.refactoring.piggybank.membermanagement.domain.service.command;
+package com.example.piggybank.membermanagement.domain.service.command;
 
 import com.example.piggybank.global.security.JwtTokenProvider;
-import com.refactoring.piggybank.membermanagement.api.dto.response.TokenResponse;
-import com.refactoring.piggybank.membermanagement.domain.entity.Member;
-import com.refactoring.piggybank.membermanagement.infrastructure.repository.MemberRepository;
+import com.example.piggybank.membermanagement.api.dto.response.TokenResponse;
+import com.example.piggybank.membermanagement.domain.entity.Member;
+import com.example.piggybank.membermanagement.infrastructure.repository.MemberRepository;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

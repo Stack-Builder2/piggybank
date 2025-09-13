@@ -1,7 +1,7 @@
-package com.refactoring.piggybank.global.sms.controller;
+package com.example.piggybank.global.sms.controller;
 
-import com.refactoring.piggybank.global.sms.dto.SmsRequest;
-import com.refactoring.piggybank.global.sms.service.SmsService;
+import com.example.piggybank.global.sms.dto.SmsRequest;
+import com.example.piggybank.global.sms.service.SmsService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

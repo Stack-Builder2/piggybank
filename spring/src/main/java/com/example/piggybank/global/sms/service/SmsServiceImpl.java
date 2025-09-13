@@ -1,6 +1,6 @@
-package com.refactoring.piggybank.global.sms.service;
+package com.example.piggybank.global.sms.service;
 
-import com.refactoring.piggybank.global.sms.util.SmsUtil;
+import com.example.piggybank.global.sms.util.SmsUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
