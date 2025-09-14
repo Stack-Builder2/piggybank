@@ -41,6 +41,7 @@ public class SecurityConfig {
                     "/api/v1/auth/login","/api/v1/auth/signup",
                     "/api/v1/email/**", "/api/v1/sms/**",
                     "/api/v1/codef/**", "/api/v2/auth/**",
+                    "/api/v2/account/**",
                     "/").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/category/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

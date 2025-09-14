@@ -29,6 +29,9 @@ public class Account extends BaseTimeEntity {
 
     @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID userId;
+    
+    @Column(name = "connected_id")
+    private String connectedId;
 
     @Column(nullable = false)
     private String accountNum;
@@ -54,6 +57,11 @@ public class Account extends BaseTimeEntity {
             this.bankName = bankName;
         }
         status = 10L;
+    }
+    
+    public void setConnectedId(String connectedId) {
+        this.connectedId = connectedId;
+        this.status = 1L;
     }
 
     public void deleteAccount() {

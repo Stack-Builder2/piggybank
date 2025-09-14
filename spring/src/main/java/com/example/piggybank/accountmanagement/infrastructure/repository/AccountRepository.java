@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends JpaRepository<Account, UUID> {
     Optional<Account> findByUserId(UUID userId);
     Optional<Account> findByAccountIdAndUserId(UUID accountId, UUID userId);
+    
+    Account findByUserIdAndAccountNum(UUID userId, String accountNum);
 }
