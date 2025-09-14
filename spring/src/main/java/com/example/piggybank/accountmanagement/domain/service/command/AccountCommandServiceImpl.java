@@ -1,8 +1,8 @@
-package com.example.piggybank.accountmanagement.domain.service;
+package com.example.piggybank.accountmanagement.domain.service.command;
 
 import com.example.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
 import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
-import com.example.piggybank.accountmanagement.api.dto.response.AccountResponse;
+import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
 import com.example.piggybank.accountmanagement.domain.entity.Account;
 import com.example.piggybank.accountmanagement.infrastructure.repository.AccountRepository;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
@@ -14,11 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AccountCommandService {
+public class AccountCommandServiceImpl implements AccountCommandService {
 
     private final AccountRepository accountRepository;
 
-    public AccountResponse createAccount(String userId, AccountCreateRequest request) {
+    public AccountCreateResponse createAccount(String userId, AccountCreateRequest request) {
 
         Account account = Account.builder()
                 .userId(UUID.fromString(userId))
@@ -28,13 +28,24 @@ public class AccountCommandService {
 
         accountRepository.save(account);
 
-        return new AccountResponse(
+        return new AccountCreateResponse(
                 account.getUserId(),
-                account.getAccountNum(),
-                account.getBankName()
+                account
         );
     }
-
+    
+    @Override
+    public AccountCreateResponse setConnectedId(String accountId, String userId, String connectedId) {
+        Account account = accountRepository.findByAccountIdAndUserId(UUID.fromString(accountId), UUID.fromString(userId))
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 계좌입니다."));
+        account.setConnectedId(connectedId);
+        
+        return new AccountCreateResponse(
+            account.getUserId(),
+            account
+        );
+    }
+    
     public void updateAccount(String userId, UUID accountId, AccountUpdateRequest request) {
 
         Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))

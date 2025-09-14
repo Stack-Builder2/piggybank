@@ -35,7 +35,8 @@ public class CodefController {
     
     @Operation(summary = "Codef 계좌 거래내역 조회", description = "AccessToken, ConnectedId 필요")
     @PostMapping("/get/transaction")
-    public ResponseEntity<CodefTransactionResDto> getTransaction(CodefTransactionReqDto codefTransactionReqDto) {
+    public ResponseEntity<CodefTransactionResDto> getTransaction(
+        CodefTransactionReqDto codefTransactionReqDto) {
         CodefTransactionResDto transaction = codefService.getCodefTransactions(codefTransactionReqDto);
         return ResponseEntity.ok(transaction);
     }

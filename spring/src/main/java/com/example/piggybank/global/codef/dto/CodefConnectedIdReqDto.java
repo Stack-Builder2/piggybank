@@ -1,8 +1,8 @@
 package com.example.piggybank.global.codef.dto;
 
+import com.example.piggybank.accountmanagement.domain.entity.Account;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
 
 public record CodefConnectedIdReqDto (
     @NotBlank(message = "accessToken이 비었습니다.")
@@ -15,8 +15,8 @@ public record CodefConnectedIdReqDto (
     @NotBlank(message = "은행 비밀번호가 비었습니다.")
     String bankPassword,
     
-    @NotBlank(message = "은행명을 입력해주세요.")
-    String bankName
+    @NotBlank(message = "계좌가 비었습니다.")
+    Account account
 ){
 
 }
