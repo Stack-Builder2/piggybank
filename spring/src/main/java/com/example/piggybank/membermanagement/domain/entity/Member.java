@@ -43,7 +43,7 @@ public class Member extends BaseTimeEntity {
         this.role = role;
     }
 
-    public void updatePassword(UUID userId, String newPassword) {
+    public void updatePassword(String newPassword) {
         this.password = newPassword;
     }
 

@@ -18,7 +18,7 @@ public class PatternAnalysisServiceImpl implements PatternAnalysisService {
 
     @Override
     public BatchResponse analyzeDescriptions(List<TxnRequest> items) {
-        BatchRequest request = new BatchRequest(items);
+        BatchRequest request = new BatchRequest(items);     // 분석할 거래 목록
         return pythonClient.post()
             .uri("/analyze")
             .body(BodyInserters.fromValue(request))
