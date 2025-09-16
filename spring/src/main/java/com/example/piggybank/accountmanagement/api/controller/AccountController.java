@@ -6,11 +6,13 @@ import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateRes
 import com.example.piggybank.accountmanagement.domain.service.command.AccountCommandService;
 import com.example.piggybank.accountmanagement.domain.service.facade.AccountFacadeService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,5 +44,14 @@ public class AccountController {
     public ResponseEntity<String> deleteAccount(@AuthenticationPrincipal String userId, UUID accountId) {
         accountService.deleteAccount(userId, accountId);
         return ResponseEntity.ok("계좌 정보가 삭제되었습니다.");
+    }
+    
+    @Operation(summary = "계좌 id 조회", description = "사용자 계좌 id 조회")
+    @GetMapping("/get/id")
+    public ResponseEntity<List<UUID>> getAccountId(@AuthenticationPrincipal String userId) {
+        
+        List<UUID> accountIds = accountService.getAccountIds(userId);
+        return ResponseEntity.ok(accountIds);
+        
     }
 }

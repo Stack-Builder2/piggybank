@@ -19,13 +19,5 @@ public class CodefEventListener {
         CodefConnectedIdReqDto reqDto = new CodefConnectedIdReqDto(accessToken, event.getRequest().bankId(), event.getRequest().bankPassword(), event.getAccount());
         codefService.publishCodefConnectedId(reqDto);
     }
-
-    
-    
-    
-    private String createConnectedId(AccountCreatedEvent event) {
-        String accessToken = codefService.publishCodefAccessToken();
-        return null;
-    }
     
 }

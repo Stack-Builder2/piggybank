@@ -17,6 +17,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.crypto.Cipher;
 import lombok.RequiredArgsConstructor;
@@ -71,10 +72,10 @@ public class CodefServiceImpl implements CodefService {
         RestTemplate rt = new RestTemplate();
         
         ResponseEntity<String> response = rt.exchange(
-            "https://oauth.codef.io/oauth/token", //{요청할 서버 주소}
-            HttpMethod.POST, //{요청할 방식}
-            entity, // {요청할 때 보낼 데이터}
-            String.class //{요청시 반환되는 데이터 타입}
+            "https://oauth.codef.io/oauth/token",
+            HttpMethod.POST,
+            entity,
+            String.class
         );
         
         ObjectMapper mapper = new ObjectMapper();
@@ -112,12 +113,11 @@ public class CodefServiceImpl implements CodefService {
         account.put("countryCode", "KR");
         account.put("businessType", "BK");
         account.put("clientType", "P"); // 개인 : P / 기업 : B / 통합 : A
-        account.put("organization", organizationCode); // 0004 = KB 국민은행
+        account.put("organization", organizationCode);
         account.put("loginType", "1"); // 0: 인증서, 1: 아이디/패스워드
         account.put("id", reqDto.bankId());
         account.put("password", encodedPassword); // RSA 암호화 값
         
-        // accountList 배열에 담기
         LinkedMultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.put("accountList", Collections.singletonList(account));
         
@@ -126,10 +126,10 @@ public class CodefServiceImpl implements CodefService {
         RestTemplate rt = new RestTemplate();
         
         ResponseEntity<String> response = rt.exchange(
-            "https://development.codef.io/v1/account/create", //{요청할 서버 주소}
-            HttpMethod.POST, //{요청할 방식}
+            "https://development.codef.io/v1/account/create",
+            HttpMethod.POST,
             entity,
-            String.class //{요청시 반환되는 데이터 타입}
+            String.class
         );
         String decodedResponse = URLDecoder.decode(response.getBody(), StandardCharsets.UTF_8);
         
@@ -144,7 +144,7 @@ public class CodefServiceImpl implements CodefService {
     }
     
     @Override
-    public CodefTransactionResDto getCodefTransactions(CodefTransactionReqDto reqDto) {
+    public List<CodefTransactionResDto.TranHistory> getCodefTransactions(CodefTransactionReqDto reqDto) {
         
         String bearerAuthValue = "Bearer " + reqDto.accessToken();
         
@@ -172,14 +172,15 @@ public class CodefServiceImpl implements CodefService {
         
         ResponseEntity<String> response = rt.exchange(
             "https://development.codef.io/v1/kr/bank/p/account/transaction-list",
-            HttpMethod.POST, //{요청할 방식}
+            HttpMethod.POST,
             entity,
-            String.class //{요청시 반환되는 데이터 타입}
+            String.class
         );
         String decodedResponse = URLDecoder.decode(response.getBody(), StandardCharsets.UTF_8);
         
         CodefTransactionResDto codefTransactionResDto = transactionToJson(decodedResponse);
-        return codefTransactionResDto;
+        List<CodefTransactionResDto.TranHistory> tranHistoryList = codefTransactionResDto.getTranHistories();
+        return tranHistoryList;
     }
     
     
