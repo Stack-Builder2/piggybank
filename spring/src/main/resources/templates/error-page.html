@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>에러 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 450px;
+            margin: 0 auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 26px;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #495057;
+            margin-bottom: 30px;
+        }
+        a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>⚠️ 잘못된 요청입니다</h1>
+    <p th:text="${message}">유효하지 않거나 만료된 링크입니다.</p>
+    <a href="/" th:href="@{/}">메인으로 돌아가기</a>
+</div>
+</body>
+</html>

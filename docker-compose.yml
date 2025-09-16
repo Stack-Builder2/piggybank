@@ -8,14 +8,17 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - PYTHON_BASE_URL=http://fastapi:8000
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/piggybank
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=soup
+      - SPRING_DATASOURCE_USERNAME=piggybank_user
+      - SPRING_DATASOURCE_PASSWORD=root
     env_file:
       - ./spring/.env
     depends_on:
-      - fastapi
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      fastapi:
+        condition: service_started
+      redis:
+        condition: service_started
     networks:
       - piggybank-network
 
@@ -42,6 +45,11 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - db_data:/var/lib/mysql
     networks:

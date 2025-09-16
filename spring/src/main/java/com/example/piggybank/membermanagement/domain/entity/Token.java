@@ -23,11 +23,7 @@ public class Token {
     private Long ttlSeconds;
 
     public static Token create(String token, String email, Duration ttl) {
-        Token t = new Token();
-        t.tokenId = token;
-        t.email = email;
-        t.ttlSeconds = ttl.toSeconds();
-        return t;
+        return new Token(token, email, ttl.toSeconds());
     }
 
 }

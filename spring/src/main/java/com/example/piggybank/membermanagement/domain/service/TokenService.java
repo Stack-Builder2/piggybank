@@ -5,7 +5,7 @@ import java.time.Duration;
 public interface TokenService {
 
     String saveTempToken(String email, Duration ttl);
-    String get(String token);
     String consume(String token);
+    boolean exists(String token);
 
 }

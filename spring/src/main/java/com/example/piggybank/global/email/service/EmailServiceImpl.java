@@ -1,11 +1,8 @@
 package com.example.piggybank.global.email.service;
 
-import com.example.piggybank.membermanagement.domain.service.TokenService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import java.time.Duration;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -18,24 +15,6 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender emailSender;
     private final SpringTemplateEngine templateEngine;
-    private final TokenService tokenService;
-
-    @Override
-    public void sendSimpleMessage(String to, String subject, String text) {
-
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("qotn0327@gmail.com");
-            message.setTo(to);
-            message.setSubject(subject);
-            message.setText(text);
-
-            emailSender.send(message);
-
-        } catch (Exception e) {
-            throw new RuntimeException("메일 발송 실패", e);
-        }
-    }
 
     @Override
     public void sendHtmlMessage(String to, String subject, String htmlContent) {
@@ -54,6 +33,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Override
     public void sendVerificationEmail(String to, String verificationUrl) {
         Context context = new Context();
         context.setVariable("verificationUrl", verificationUrl);
@@ -63,15 +43,4 @@ public class EmailServiceImpl implements EmailService {
         sendHtmlMessage(to, "이메일 인증 요청", htmlContent);
     }
 
-    public void passwordChangedEmail(String to) {
-        String token = tokenService.saveTempToken(to, Duration.ofMinutes(10));
-        String verificationUrl = "http://localhost:8080/password/verify?token=" + token;
-
-        Context context = new Context();
-        context.setVariable("verificationUrl", verificationUrl);
-
-        String htmlContent = templateEngine.process("email-verification", context);
-
-        sendHtmlMessage(to, "이메일 인증 요청", htmlContent);
-    }
 }
