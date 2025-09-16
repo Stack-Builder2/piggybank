@@ -4,8 +4,10 @@ import com.example.piggybank.global.codef.dto.CodefAccessTokenResDto;
 import com.example.piggybank.global.codef.dto.CodefConnectedIdReqDto;
 import com.example.piggybank.global.codef.dto.CodefTransactionReqDto;
 import com.example.piggybank.global.codef.dto.CodefTransactionResDto;
+import com.example.piggybank.global.codef.dto.CodefTransactionResDto.TranHistory;
 import com.example.piggybank.global.codef.service.CodefService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,9 +37,9 @@ public class CodefController {
     
     @Operation(summary = "Codef 계좌 거래내역 조회", description = "AccessToken, ConnectedId 필요")
     @PostMapping("/get/transaction")
-    public ResponseEntity<CodefTransactionResDto> getTransaction(
+    public ResponseEntity<List<TranHistory>> getTransaction(
         CodefTransactionReqDto codefTransactionReqDto) {
-        CodefTransactionResDto transaction = codefService.getCodefTransactions(codefTransactionReqDto);
+        List<TranHistory> transaction = codefService.getCodefTransactions(codefTransactionReqDto);
         return ResponseEntity.ok(transaction);
     }
 }

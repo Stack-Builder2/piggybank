@@ -8,6 +8,8 @@ import com.example.piggybank.accountmanagement.domain.entity.Account;
 import com.example.piggybank.accountmanagement.domain.service.command.AccountCommandService;
 import com.example.piggybank.accountmanagement.domain.service.query.AccountQueryService;
 import com.example.piggybank.accountmanagement.event.AccountCreatedEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -58,5 +60,15 @@ public class AccountFacadeServiceImpl implements AccountFacadeService{
     @Override
     public void deleteAccount(String userID, UUID accountId) {
         accountCommandService.deleteAccount(userID, accountId);
+    }
+    
+    @Override
+    public List<UUID> getAccountIds(String userId) {
+        List<Account> accounts = accountQueryService.getAccounts(UUID.fromString(userId));
+        List<UUID> accountIds = new ArrayList<>();
+        for (Account account : accounts) {
+            accountIds.add(account.getAccountId());
+        }
+        return accountIds;
     }
 }

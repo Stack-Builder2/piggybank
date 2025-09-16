@@ -2,6 +2,7 @@ package com.example.piggybank.global.codef.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Collections;
 import java.util.List;
 
 // 거래내역 응답 최상위 DTO
@@ -65,4 +66,10 @@ public record CodefTransactionResDto(
         @JsonProperty("resAfterTranBalance") String resAfterTranBalance, //  거래 후 잔액
         @JsonProperty("tranDesc") String tranDesc                  //  비고
     ) {}
+    public List<TranHistory> getTranHistories() {
+        if (data != null && data.resTrHistoryList() != null) {
+            return data.resTrHistoryList();
+        }
+        return Collections.emptyList();
+    }
 }
