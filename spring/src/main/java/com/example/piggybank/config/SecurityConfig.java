@@ -35,12 +35,14 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))   // 서버가 세션을 생성하거나 저장하지 않도록 설정
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/view/password/**").permitAll()
+                .requestMatchers("/api/v2/password/**").permitAll()
                 .requestMatchers("/api/v1/auth/**", "/h2-console/**",
                     "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
                     "/swagger-resources/**", "/webjars/**",
                     "/api/v1/auth/login","/api/v1/auth/signup",
                     "/api/v1/email/**", "/api/v1/sms/**",
-                    "/api/v1/codef/**", "/api/v2/auth/**",
+                    "/api/v1/codef/**", "/api/v2/auth/**", "/api/v2/account/**",
                     "/").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/category/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

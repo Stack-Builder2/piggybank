@@ -8,5 +8,5 @@ public interface MemberQueryService {
 
     Optional<Member> findById(UUID userId);
     Optional<Member> findByEmail(String email);
-    boolean existByEmail(String email);
+    boolean existsByEmail(String email);
 }

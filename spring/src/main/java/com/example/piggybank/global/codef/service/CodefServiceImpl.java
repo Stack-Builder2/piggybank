@@ -5,6 +5,7 @@ import com.example.piggybank.global.codef.dto.CodefConnectedIdResDto;
 import com.example.piggybank.global.codef.dto.CodefTransactionReqDto;
 import com.example.piggybank.global.codef.dto.CodefTransactionResDto;
 import com.example.piggybank.global.codef.enums.BankType;
+import com.example.piggybank.global.codef.event.CodefIdCreatedEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,11 +18,11 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.crypto.Cipher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -47,10 +48,11 @@ public class CodefServiceImpl implements CodefService {
     private String CLIENT_SECRET;
     
     private final ObjectMapper mapper = new ObjectMapper();
+    private final ApplicationEventPublisher eventPublisher;
     
     @Override
     public String publishCodefAccessToken() {
-        String basicAuthValue = "Basic " + java.util.Base64.getEncoder().encodeToString(
+        String basicAuthValue = "Basic " + Base64.getEncoder().encodeToString(
             (CLIENT_ID + ":" + CLIENT_SECRET).getBytes(StandardCharsets.UTF_8)
         );
         
@@ -92,7 +94,7 @@ public class CodefServiceImpl implements CodefService {
         
         String bearerAuthValue = "Bearer " + reqDto.accessToken();
         
-        String organizationCode = BankType.getCodeByName(reqDto.bankName());
+        String organizationCode = BankType.getCodeByName(reqDto.account().getBankName());
         
         String encodedPassword = null;
         
@@ -133,6 +135,10 @@ public class CodefServiceImpl implements CodefService {
         
         CodefConnectedIdResDto jsonConnectedId = connectedIdToJson(decodedResponse);
         String connectedId = jsonConnectedId.data().connectedId();
+        
+        log.info("connectedId : " + connectedId);
+        
+        eventPublisher.publishEvent(new CodefIdCreatedEvent(this, connectedId, reqDto.account()));
         
         return connectedId;
     }

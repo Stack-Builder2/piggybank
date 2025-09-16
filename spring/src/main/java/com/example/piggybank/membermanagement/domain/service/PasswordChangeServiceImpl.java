@@ -12,6 +12,7 @@ import com.example.piggybank.membermanagement.infrastructure.event.PasswordChang
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,27 +23,23 @@ public class PasswordChangeServiceImpl implements PasswordChangeService {
     private final TokenService tokenService;
     private final ApplicationEventPublisher eventPublisher;
     private final MemberQueryService memberQueryService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
-    public void requestReset(String email) {
-
-        Member member = memberQueryService.findByEmail(email)
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+    public void requestResetPassword(String email) {
 
         String token = tokenService.saveTempToken(email, Duration.ofMinutes(15));
 
-        String verificationUrl = "http://localhost:8080/api/v1/password/reset?token=" + token;
+        String verificationUrl = "http://localhost:8080/view/password/reset/verify?token=" + token;
+
         eventPublisher.publishEvent(
             new PasswordChangedEmailEvent(
                 this,
                 email,
-                "비밀번호 재설정 요청",
-                verificationUrl,
-                member.getUserId()
+                verificationUrl
             )
         );
-
     }
 
     @Override
@@ -57,13 +54,13 @@ public class PasswordChangeServiceImpl implements PasswordChangeService {
         Member member = memberQueryService.findByEmail(email)
             .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
 
+        member.updatePassword(passwordEncoder.encode(newPassword));
+
         eventPublisher.publishEvent(
             new PasswordChangeSuccessEvent(
                 this,
                 email,
-                "비밀번호 변경 완료",
-                null,
-                member.getUserId()
+                null
             )
         );
     }

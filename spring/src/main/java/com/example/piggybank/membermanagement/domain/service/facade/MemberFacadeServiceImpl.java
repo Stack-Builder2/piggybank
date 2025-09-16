@@ -53,7 +53,7 @@ public class MemberFacadeServiceImpl {
 
         String newPassword = memberCommandService.encodePassword(request.password());
 
-        member.updatePassword(member.getUserId(), newPassword);
+        member.updatePassword(newPassword);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -67,7 +67,7 @@ public class MemberFacadeServiceImpl {
     @Transactional
     public void signUp(SignUpRequest request) {
 
-        if(memberQueryService.existByEmail(request.email())) {
+        if(memberQueryService.existsByEmail(request.email())) {
             throw new BusinessException(EMAIL_DUPLICATION);
         }
 
