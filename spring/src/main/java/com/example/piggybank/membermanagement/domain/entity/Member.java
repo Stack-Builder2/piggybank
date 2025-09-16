@@ -30,7 +30,7 @@ public class Member extends BaseTimeEntity {
 //    @Embedded
 //    private Profile profile;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "`role`", nullable = false)
     private int role; // 0: ADMIN, 1: USER
 
     @Version
