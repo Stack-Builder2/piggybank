@@ -63,12 +63,8 @@ public class AccountFacadeServiceImpl implements AccountFacadeService{
     }
     
     @Override
-    public List<UUID> getAccountIds(String userId) {
+    public List<Account> getAccounts(String userId) {
         List<Account> accounts = accountQueryService.getAccounts(UUID.fromString(userId));
-        List<UUID> accountIds = new ArrayList<>();
-        for (Account account : accounts) {
-            accountIds.add(account.getAccountId());
-        }
-        return accountIds;
+        return accounts;
     }
 }

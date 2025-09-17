@@ -4,6 +4,7 @@ import com.example.piggybank.accountmanagement.api.dto.request.AccountCreateRequ
 import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
 import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
 import com.example.piggybank.accountmanagement.api.dto.response.AccountUpdateResponse;
+import com.example.piggybank.accountmanagement.domain.entity.Account;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,5 +14,5 @@ public interface AccountFacadeService {
     public AccountCreateResponse setConnectedId(String accountId, String userId, String connectedId);
     public AccountUpdateResponse updateAccount(String userId, UUID accountId, AccountUpdateRequest request);
     public void deleteAccount(String userID, UUID accountId);
-    public List<UUID> getAccountIds(String userId);
+    public List<Account> getAccounts(String userId);
 }

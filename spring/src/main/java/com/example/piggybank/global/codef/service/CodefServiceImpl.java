@@ -1,11 +1,13 @@
 package com.example.piggybank.global.codef.service;
 
-import com.example.piggybank.global.codef.dto.CodefConnectedIdReqDto;
-import com.example.piggybank.global.codef.dto.CodefConnectedIdResDto;
-import com.example.piggybank.global.codef.dto.CodefTransactionReqDto;
-import com.example.piggybank.global.codef.dto.CodefTransactionResDto;
+import com.example.piggybank.global.codef.dto.req.CodefConnectedIdReqDto;
+import com.example.piggybank.global.codef.dto.res.CodefConnectedIdResDto;
+import com.example.piggybank.global.codef.dto.req.CodefTransactionReqDto;
+import com.example.piggybank.global.codef.dto.res.CodefTransactionResDto;
+import com.example.piggybank.global.codef.dto.res.CodefTransactionResDto.TranHistory;
 import com.example.piggybank.global.codef.enums.BankType;
 import com.example.piggybank.global.codef.event.CodefIdCreatedEvent;
+import com.example.piggybank.global.codef.event.CodefTranHistoryCreatedEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -144,7 +146,7 @@ public class CodefServiceImpl implements CodefService {
     }
     
     @Override
-    public List<CodefTransactionResDto.TranHistory> getCodefTransactions(CodefTransactionReqDto reqDto) {
+    public List<TranHistory> getCodefTransactions(CodefTransactionReqDto reqDto) {
         
         String bearerAuthValue = "Bearer " + reqDto.accessToken();
         
@@ -178,8 +180,15 @@ public class CodefServiceImpl implements CodefService {
         );
         String decodedResponse = URLDecoder.decode(response.getBody(), StandardCharsets.UTF_8);
         
+        log.info("decodedResponse : " + decodedResponse);
+        
         CodefTransactionResDto codefTransactionResDto = transactionToJson(decodedResponse);
-        List<CodefTransactionResDto.TranHistory> tranHistoryList = codefTransactionResDto.getTranHistories();
+        List<TranHistory> tranHistoryList = codefTransactionResDto.getTranHistories();
+        
+        log.info("tranHistoryList : " + tranHistoryList);
+        
+        eventPublisher.publishEvent(new CodefTranHistoryCreatedEvent(this, tranHistoryList, reqDto.accountId()));
+        
         return tranHistoryList;
     }
     

@@ -1,4 +1,4 @@
-package com.example.piggybank.global.codef.dto;
+package com.example.piggybank.global.codef.dto.res;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
