@@ -1,4 +1,4 @@
-package com.example.piggybank.global.codef.dto;
+package com.example.piggybank.global.codef.dto.res;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

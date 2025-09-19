@@ -3,6 +3,7 @@ package com.example.piggybank.accountmanagement.api.controller;
 import com.example.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
 import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
 import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
+import com.example.piggybank.accountmanagement.domain.entity.Account;
 import com.example.piggybank.accountmanagement.domain.service.command.AccountCommandService;
 import com.example.piggybank.accountmanagement.domain.service.facade.AccountFacadeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,11 +47,11 @@ public class AccountController {
         return ResponseEntity.ok("계좌 정보가 삭제되었습니다.");
     }
     
-    @Operation(summary = "계좌 id 조회", description = "사용자 계좌 id 조회")
+    @Operation(summary = "계좌 조회", description = "사용자 계좌 조회")
     @GetMapping("/get/id")
-    public ResponseEntity<List<UUID>> getAccountId(@AuthenticationPrincipal String userId) {
+    public ResponseEntity<List<Account>> getAccountId(@AuthenticationPrincipal String userId) {
         
-        List<UUID> accountIds = accountService.getAccountIds(userId);
+        List<Account> accountIds = accountService.getAccounts(userId);
         return ResponseEntity.ok(accountIds);
         
     }

@@ -1,10 +1,9 @@
 package com.example.piggybank.global.codef.controller;
 
-import com.example.piggybank.global.codef.dto.CodefAccessTokenResDto;
-import com.example.piggybank.global.codef.dto.CodefConnectedIdReqDto;
-import com.example.piggybank.global.codef.dto.CodefTransactionReqDto;
-import com.example.piggybank.global.codef.dto.CodefTransactionResDto;
-import com.example.piggybank.global.codef.dto.CodefTransactionResDto.TranHistory;
+import com.example.piggybank.global.codef.dto.res.CodefAccessTokenResDto;
+import com.example.piggybank.global.codef.dto.req.CodefConnectedIdReqDto;
+import com.example.piggybank.global.codef.dto.req.CodefTransactionReqDto;
+import com.example.piggybank.global.codef.dto.res.CodefTransactionResDto.TranHistory;
 import com.example.piggybank.global.codef.service.CodefService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
@@ -35,7 +34,7 @@ public class CodefController {
     return ResponseEntity.ok(connectedId);}
     
     
-    @Operation(summary = "Codef 계좌 거래내역 조회", description = "AccessToken, ConnectedId 필요")
+    @Operation(summary = "Codef 계좌 거래내역 조회 및 저장", description = "AccessToken, ConnectedId 필요")
     @PostMapping("/get/transaction")
     public ResponseEntity<List<TranHistory>> getTransaction(
         CodefTransactionReqDto codefTransactionReqDto) {

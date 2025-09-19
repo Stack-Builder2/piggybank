@@ -14,6 +14,7 @@ import jakarta.persistence.Version;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,8 +44,8 @@ public class Transaction extends BaseTimeEntity {
     private LocalDateTime transactionDate;
 
     @Column(name = "inout_type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private com.example.piggybank.domain.payment.entity.InputType inputType;
+//    @Enumerated(EnumType.STRING)
+    private boolean inputType;
 
     @Column(nullable = false)
     private String description;
@@ -52,9 +53,10 @@ public class Transaction extends BaseTimeEntity {
     @Version
     private Long version;
 
+    @Builder
     public Transaction(UUID accountId, Long categoryId, BigDecimal amount,
         LocalDateTime transactionDate,
-        InputType inputType, String description) {
+        boolean inputType, String description) {
         this.accountId = accountId;
         this.categoryId = categoryId;
         this.amount = amount;

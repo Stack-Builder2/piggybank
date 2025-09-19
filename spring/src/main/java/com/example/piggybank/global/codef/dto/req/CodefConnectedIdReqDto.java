@@ -1,4 +1,4 @@
-package com.example.piggybank.global.codef.dto;
+package com.example.piggybank.global.codef.dto.req;
 
 import com.example.piggybank.accountmanagement.domain.entity.Account;
 import jakarta.validation.constraints.NotBlank;
