@@ -5,6 +5,7 @@ import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequ
 import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
 import com.example.piggybank.accountmanagement.api.dto.response.AccountUpdateResponse;
 import com.example.piggybank.accountmanagement.domain.entity.Account;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,4 +16,6 @@ public interface AccountFacadeService {
     public AccountUpdateResponse updateAccount(String userId, UUID accountId, AccountUpdateRequest request);
     public void deleteAccount(String userID, UUID accountId);
     public List<Account> getAccounts(String userId);
+    public void updateBalance(String userId, String accountId, long balance);
+    public void updateConsumption(String userId, String accountId, long consumption);
 }

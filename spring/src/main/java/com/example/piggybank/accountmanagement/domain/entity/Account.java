@@ -39,6 +39,12 @@ public class Account extends BaseTimeEntity {
     @Column(nullable = false)
     private String bankName;
 
+    @Column(nullable = false)
+    private long balance;
+    
+    @Column(nullable = false)
+    private long consumption;
+    
     @Version
     private Long version;
 
@@ -62,6 +68,14 @@ public class Account extends BaseTimeEntity {
     public void setConnectedId(String connectedId) {
         this.connectedId = connectedId;
         this.status = 1L;
+    }
+    
+    public void updateBalance(long balance) {
+        this.balance = balance;
+    }
+    
+    public void updateConsumption(long consumption) {
+        this.consumption = consumption;
     }
 
     public void deleteAccount() {

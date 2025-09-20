@@ -1,9 +1,12 @@
 package com.example.piggybank.accountmanagement.api.controller;
 
-import com.example.piggybank.accountmanagement.api.dto.request.TransactionCreateRequest;
+import com.example.piggybank.accountmanagement.api.dto.request.CreateTransactionRequest;
+import com.example.piggybank.accountmanagement.api.dto.request.GetTransactionRequest;
 import com.example.piggybank.accountmanagement.api.dto.response.TransactionResponse;
+import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import com.example.piggybank.accountmanagement.domain.service.facade.TransactionFacadeService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +29,18 @@ public class TransactionController {
             return ResponseEntity.ok(transactionService.getTransaction(id));
         }
         
-        @Operation(summary = "거래내역 저장 및 조회", description = "계좌 거래내역 저장 후 조회")
-        @GetMapping("/transaction")
-        public ResponseEntity<String> createTransactions(@AuthenticationPrincipal String userId, TransactionCreateRequest request) {
-            transactionService.getTransactions(UUID.fromString(userId), request);
+        @Operation(summary = "거래내역 저장", description = "계좌 거래내역 저장")
+        @GetMapping("/save")
+        public ResponseEntity<String> createTransactions(@AuthenticationPrincipal String userId, CreateTransactionRequest request) {
+            transactionService.getTransactionsByCodef(UUID.fromString(userId), request);
             return ResponseEntity.ok(null);
+        }
+        
+        @Operation(summary = "거래내역 조회", description = "저장된 거래내역 조회")
+        @GetMapping("/get")
+        public ResponseEntity<List<Transaction>> getTransactions(@AuthenticationPrincipal String userId, GetTransactionRequest request) {
+            List<Transaction> response = transactionService.getTransactions(request);
+            return ResponseEntity.ok(response);
         }
     
     }
