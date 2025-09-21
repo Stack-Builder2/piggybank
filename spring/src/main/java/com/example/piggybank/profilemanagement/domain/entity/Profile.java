@@ -1,4 +1,4 @@
-package com.example.piggybank.domain.profile.entity;
+package com.example.piggybank.profilemanagement.domain.entity;
 
 import com.example.piggybank.global.common.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -16,8 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "Domain_profile")
-@Table(name = "profile_tb")
+@Entity
+@Table(name = "profile")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

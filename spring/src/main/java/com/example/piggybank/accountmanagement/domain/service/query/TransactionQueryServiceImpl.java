@@ -1,8 +1,13 @@
 package com.example.piggybank.accountmanagement.domain.service.query;
 
+import com.example.piggybank.accountmanagement.api.dto.request.CreateTransactionRequest;
+import com.example.piggybank.accountmanagement.api.dto.request.GetTransactionRequest;
 import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import com.example.piggybank.accountmanagement.infrastructure.repository.TransactionRepository;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,9 +26,11 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
     }
     
     @Override
-    public Transaction findTransactionByAccountIdAndDateTime(UUID accountId, LocalDateTime dateTime) {
-        Transaction transaction = transactionRepository.findByAccountIdAndTransactionDate(accountId, dateTime);
-        return transaction;
+    public List<Transaction> getTransactions(UUID accountId, LocalDateTime startDate, LocalDateTime endDate) {
+        
+        List<Transaction> transactions = new ArrayList<>();
+        transactions = transactionRepository.findByAccountIdAndTransactionDateBetween(accountId, startDate, endDate);
+        return transactions;
     }
     
     @Override
@@ -32,4 +39,7 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
         
         return transactionRepository.existsByAccountIdAndTransactionDate(accountId, localDateTime);
     }
+    
+    
+    
 }

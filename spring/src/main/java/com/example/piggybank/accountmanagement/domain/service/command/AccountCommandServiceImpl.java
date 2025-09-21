@@ -6,6 +6,7 @@ import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateRes
 import com.example.piggybank.accountmanagement.domain.entity.Account;
 import com.example.piggybank.accountmanagement.infrastructure.repository.AccountRepository;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,13 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     private final AccountRepository accountRepository;
 
     public AccountCreateResponse createAccount(String userId, AccountCreateRequest request) {
-
+        if(accountRepository.findByUserIdAndAccountNum(UUID.fromString(userId), request.accountNum()) != null) return null;
+        
         Account account = Account.builder()
                 .userId(UUID.fromString(userId))
                 .accountNum(request.accountNum())
                 .bankName(request.bankName())
                 .build();
-
         accountRepository.save(account);
 
         return new AccountCreateResponse(
@@ -60,5 +61,19 @@ public class AccountCommandServiceImpl implements AccountCommandService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 계좌입니다."));
 
         account.deleteAccount();
+    }
+    
+    @Override
+    public void updateBalance(String userId, UUID accountId, long balance) {
+        Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 계좌입니다."));
+        account.updateBalance(balance);
+    }
+    
+    @Override
+    public void updateConsumption(String userId, UUID accountId, long consumption) {
+        Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
+            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 계좌입니다."));
+        account.updateConsumption(consumption);
     }
 }

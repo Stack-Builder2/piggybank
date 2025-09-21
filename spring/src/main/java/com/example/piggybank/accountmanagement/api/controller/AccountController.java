@@ -47,12 +47,11 @@ public class AccountController {
         return ResponseEntity.ok("계좌 정보가 삭제되었습니다.");
     }
     
-    @Operation(summary = "계좌 조회", description = "사용자 계좌 조회")
+    @Operation(summary = "사용자 계좌 조회", description = "사용자 계좌 조회")
     @GetMapping("/get/id")
     public ResponseEntity<List<Account>> getAccountId(@AuthenticationPrincipal String userId) {
         
         List<Account> accountIds = accountService.getAccounts(userId);
         return ResponseEntity.ok(accountIds);
-        
     }
 }
