@@ -12,7 +12,10 @@ import com.example.piggybank.membermanagement.api.dto.response.TokenResponse;
 import com.example.piggybank.membermanagement.domain.entity.Member;
 import com.example.piggybank.membermanagement.domain.service.command.MemberCommandService;
 import com.example.piggybank.membermanagement.domain.service.query.MemberQueryService;
+import com.example.piggybank.membermanagement.event.MemberCreatedEvent;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberFacadeServiceImpl {
     private final MemberCommandService memberCommandService;
     private final MemberQueryService memberQueryService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional(readOnly = true)
     public TokenResponse login(LoginRequest request) {
@@ -79,5 +83,8 @@ public class MemberFacadeServiceImpl {
             request.phoneNumber(),
             1
         );
+        
+        UUID userId = memberQueryService.findByEmail(request.email()).get().getUserId();
+        eventPublisher.publishEvent(new MemberCreatedEvent(this, userId, "Member Created"));
     }
 }

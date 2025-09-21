@@ -8,7 +8,7 @@ import com.example.piggybank.domain.profile.dto.req.ProfileRequest;
 import com.example.piggybank.domain.profile.dto.req.ProfileAddGoalRequest;
 import com.example.piggybank.domain.profile.dto.req.ProfileAddLimitRequest;
 
-import com.example.piggybank.domain.profile.repository.ProfileRepository;
+import com.example.piggybank.domain.profile.repository.DomainProfileRepository;
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import java.util.UUID;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
     
-    private final ProfileRepository profileRepository;
+    private final DomainProfileRepository profileRepository;
     private final UserRepository userRepository;
     
     @Override

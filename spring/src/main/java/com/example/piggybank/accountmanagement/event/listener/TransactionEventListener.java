@@ -15,7 +15,6 @@ public class TransactionEventListener {
     
     @EventListener
     public void handleCodefTranHistoryCreatedEvent(CodefTranHistoryCreatedEvent event) {
-        log.info("transaction history recieved to transaction domain");
         transactionFacadeService.createTransactions(event.getHistories(),event.getAccountId());
     }
 }

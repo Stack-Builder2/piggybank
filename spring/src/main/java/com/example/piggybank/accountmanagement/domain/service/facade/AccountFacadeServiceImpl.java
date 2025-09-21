@@ -8,6 +8,7 @@ import com.example.piggybank.accountmanagement.domain.entity.Account;
 import com.example.piggybank.accountmanagement.domain.service.command.AccountCommandService;
 import com.example.piggybank.accountmanagement.domain.service.query.AccountQueryService;
 import com.example.piggybank.accountmanagement.event.AccountCreatedEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -67,4 +68,15 @@ public class AccountFacadeServiceImpl implements AccountFacadeService{
         List<Account> accounts = accountQueryService.getAccounts(UUID.fromString(userId));
         return accounts;
     }
+    
+    @Override
+    public void updateBalance(String userId, String accountId, long balance) {
+        accountCommandService.updateBalance(userId, UUID.fromString(accountId), balance);
+    }
+    
+    @Override
+    public void updateConsumption(String userId, String accountId, long consumption) {
+        accountCommandService.updateConsumption(userId, UUID.fromString(accountId), consumption);
+    }
+    
 }

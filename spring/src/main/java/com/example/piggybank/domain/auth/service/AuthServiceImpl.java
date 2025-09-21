@@ -7,11 +7,10 @@ import com.example.piggybank.domain.auth.dto.resp.TokenResponse;
 import com.example.piggybank.domain.auth.entity.User;
 import com.example.piggybank.domain.auth.repository.UserRepository;
 import com.example.piggybank.domain.profile.entity.Profile;
-import com.example.piggybank.domain.profile.repository.ProfileRepository;
+import com.example.piggybank.domain.profile.repository.DomainProfileRepository;
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import com.example.piggybank.global.security.JwtTokenProvider;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
-    private final ProfileRepository profileRepository;
+    private final DomainProfileRepository profileRepository;
     
     @Transactional(readOnly = true)
     public TokenResponse login(LoginRequest request) {
