@@ -1,6 +1,8 @@
 package com.example.piggybank.accountmanagement.domain.service.facade;
 
+import com.example.piggybank.accountmanagement.api.dto.request.CategoryIdUpdateRequest;
 import com.example.piggybank.accountmanagement.api.dto.request.TransactionCreateRequest;
+import com.example.piggybank.accountmanagement.api.dto.request.TransactionRequest;
 import com.example.piggybank.accountmanagement.api.dto.response.FromCodefResponse;
 import com.example.piggybank.accountmanagement.api.dto.response.TransactionResponse;
 import com.example.piggybank.accountmanagement.domain.entity.Account;
@@ -9,6 +11,7 @@ import com.example.piggybank.accountmanagement.domain.service.command.Transactio
 import com.example.piggybank.accountmanagement.domain.service.query.AccountQueryService;
 import com.example.piggybank.accountmanagement.domain.service.query.TransactionQueryService;
 import com.example.piggybank.accountmanagement.event.TransactionCreateEvent;
+import com.example.piggybank.accountmanagement.infrastructure.event.AnalyzeTransactionEvent;
 import com.example.piggybank.accountmanagement.util.TransactionCodefMapper;
 import com.example.piggybank.global.codef.dto.res.CodefTransactionResDto.TranHistory;
 import java.math.BigDecimal;
@@ -78,6 +81,15 @@ public class TransactionFacadeServiceImpl implements TransactionFacadeService {
         
         return List.of();
     }
-    
-    
+
+    @Override
+    public void analyzeCategory(TransactionRequest request) {
+        Transaction transaction = transactionQueryService.getTransaction(request.transactionId());
+
+        eventPublisher.publishEvent(new AnalyzeTransactionEvent(this, request.description(), request.transactionId()));
+    }
+
+
+
+
 }

@@ -11,4 +11,5 @@ public interface TransactionFacadeService {
     public TransactionResponse getTransaction(UUID paymentId);
     public void getTransactions(UUID userId, TransactionCreateRequest request);
     public List<Object> createTransactions(List<TranHistory> transactions, UUID accountId);
+    public void analyzeCategory(TransactionRequest request);
 }

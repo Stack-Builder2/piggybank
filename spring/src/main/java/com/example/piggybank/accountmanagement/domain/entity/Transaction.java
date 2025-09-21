@@ -64,5 +64,9 @@ public class Transaction extends BaseTimeEntity {
         this.inputType = inputType;
         this.description = description;
     }
+
+    public void updateCategory(Long categoryId) {
+        this.categoryId = categoryId;
+    }
 }
 

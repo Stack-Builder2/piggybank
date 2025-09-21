@@ -3,8 +3,15 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import pandas as pd
 from pathlib import Path
+import os
+from fastapi import HTTPException
 
-FILE_PATH = Path(r'C:\\BAE\\python\rules.xlsx')
+# 컨테이너 내부 경로 기준
+BASE_DIR = Path(__file__).resolve().parent
+FILE_PATH = BASE_DIR / "rules.xlsx"
+if not FILE_PATH.exists():
+    raise HTTPException(status_code=500, detail=f"Rules file not found: {FILE_PATH}")
+
 
 app = FastAPI(title="Rule-based Spend Analyzer", version="1.0")
 
@@ -12,16 +19,15 @@ app = FastAPI(title="Rule-based Spend Analyzer", version="1.0")
 def load_rules(fp: Path):
     data = pd.read_excel(fp, engine='openpyxl', sheet_name="rule")
     cat = pd.read_excel(fp, engine='openpyxl', sheet_name="category")
-
-    rule_dic = {i: cat.split('|') for i, cat in enumerate(cat['category'])}
+    rule_dic = {i: c for i, c in enumerate(cat['category'])}
     return data, rule_dic
 
 data_df, rule_dic = load_rules(FILE_PATH)
 
 def apply_rules(text: str) -> str:
-    for k, keywords in rule_dic.items():
-        if all(word in text for word in keywords):
-            return str(data_df.loc[k, "response"])
+    for k, keywords in data_df["keyword"].items():
+        if keywords in text:  # 문자열 하나만 비교
+            return str(data_df.loc[k, "category"])
     return "기타"
 
 # --- 모델 ---
@@ -34,7 +40,6 @@ class BatchRequest(BaseModel):
 
 class BatchResponseItem(BaseModel):
     id: Optional[str] = None
-    description: str
     category: str
 
 class BatchResponse(BaseModel):
@@ -50,7 +55,7 @@ def analyze(req: BatchRequest):
     out = []
     for item in req.items:
         category = apply_rules(item.description)
-        out.append(BatchResponseItem(id=item.id, description=item.description, category=category))
+        out.append(BatchResponseItem(id=item.id, category=category))
     return BatchResponse(items=out)
 
 @app.post("/_admin/reload")
@@ -58,3 +63,8 @@ def reload_rules():
     global data_df, rule_dic
     data_df, rule_dic = load_rules(FILE_PATH)
     return {"status": "reloaded", "rules": len(rule_dic)}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+

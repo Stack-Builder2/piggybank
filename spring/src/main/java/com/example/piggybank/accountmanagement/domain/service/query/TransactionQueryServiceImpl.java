@@ -2,6 +2,7 @@ package com.example.piggybank.accountmanagement.domain.service.query;
 
 import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import com.example.piggybank.accountmanagement.infrastructure.repository.TransactionRepository;
+import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,8 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
     
     @Override
     public Transaction getTransaction(UUID id) {
-        Transaction transaction = transactionRepository.findById(id).
-            orElse(null);
-        return transaction;
+        return transactionRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("거래내역이 존재하지 않습니다."));
     }
     
     @Override

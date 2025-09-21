@@ -4,17 +4,15 @@ import com.example.piggybank.domain.category.dto.req.CreateCategoryReqDto;
 import com.example.piggybank.domain.category.dto.req.DeleteCategoryReqDto;
 import com.example.piggybank.domain.category.dto.req.UpdateCategoryReqDto;
 import com.example.piggybank.domain.category.entity.Category;
-import com.example.piggybank.domain.category.repository.CategoryRepository;
+import com.example.piggybank.domain.category.repository.DomainCategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class CategoryServiceImpl implements CategoryService {
     
-    private final CategoryRepository categoryRepository;
+    private final DomainCategoryRepository categoryRepository;
     
     @Override
     public void createCategory(CreateCategoryReqDto reqDto) {
