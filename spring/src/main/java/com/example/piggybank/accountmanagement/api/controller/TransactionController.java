@@ -1,6 +1,6 @@
 package com.example.piggybank.accountmanagement.api.controller;
 
-import com.example.piggybank.accountmanagement.api.dto.request.TransactionCreateRequest;
+import com.example.piggybank.accountmanagement.api.dto.request.GetTransactionRequest;
 import com.example.piggybank.accountmanagement.api.dto.request.TransactionRequest;
 import com.example.piggybank.accountmanagement.api.dto.response.AnalyzeResponse;
 import com.example.piggybank.accountmanagement.api.dto.response.TransactionResponse;
@@ -32,7 +32,7 @@ public class TransactionController {
         
         @Operation(summary = "거래내역 저장 및 조회", description = "계좌 거래내역 저장 후 조회")
         @GetMapping("/transaction")
-        public ResponseEntity<String> createTransactions(@AuthenticationPrincipal String userId, TransactionCreateRequest request) {
+        public ResponseEntity<String> createTransactions(@AuthenticationPrincipal String userId, GetTransactionRequest request) {
             transactionService.getTransactions(UUID.fromString(userId), request);
             return ResponseEntity.ok(null);
         }
