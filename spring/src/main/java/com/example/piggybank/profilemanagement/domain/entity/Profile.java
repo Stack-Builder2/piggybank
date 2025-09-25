@@ -53,11 +53,11 @@ public class Profile extends BaseTimeEntity {
         status = 99L;
     }
 
-    public void updateGoal(UUID profileId, BigDecimal goal) {
+    public void updateGoal(BigDecimal goal) {
         this.goal = goal;
     }
 
-    public void updateLimit(UUID profileId, BigDecimal limit) {
+    public void updateLimit(BigDecimal limit) {
         this.limit = limit;
     }
 }

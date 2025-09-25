@@ -184,10 +184,10 @@ public class CodefServiceImpl implements CodefService {
         
         CodefTransactionResDto codefTransactionResDto = transactionToJson(decodedResponse);
         List<TranHistory> tranHistoryList = codefTransactionResDto.getTranHistories();
-        
+        String balance = codefTransactionResDto.getBalance();
         log.info("tranHistoryList : " + tranHistoryList);
         
-        eventPublisher.publishEvent(new CodefTranHistoryCreatedEvent(this, tranHistoryList, reqDto.accountId()));
+        eventPublisher.publishEvent(new CodefTranHistoryCreatedEvent(this, tranHistoryList, reqDto.accountId(), balance));
         
         return tranHistoryList;
     }

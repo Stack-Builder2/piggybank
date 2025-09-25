@@ -75,8 +75,6 @@ public class TransactionFacadeServiceImpl implements TransactionFacadeService {
             }
         }
         
-        
-        
         return List.of();
     }
 
@@ -87,7 +85,7 @@ public class TransactionFacadeServiceImpl implements TransactionFacadeService {
         eventPublisher.publishEvent(new AnalyzeTransactionEvent(this, request.description(), request.transactionId()));
     }
 
-
+    
 
 
 }

@@ -1,4 +1,4 @@
-package com.example.piggybank.profilemanagement.domain.service.query;
+package com.example.piggybank.profilemanagement.domain.service.facade;
 
 
 import com.example.piggybank.profilemanagement.api.dto.req.ProfileAddGoalRequest;
@@ -14,4 +14,7 @@ public interface ProfileFacadeService {
     Profile updateGoal(String userId, ProfileAddGoalRequest request);
 
     ProfileResponse createProfile(ProfileRequest request);
+    
+    String compareLimit(String userId);
+    String compareGoal(String userId);
 }

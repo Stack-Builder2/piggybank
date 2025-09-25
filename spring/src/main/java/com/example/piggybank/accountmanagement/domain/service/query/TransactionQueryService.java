@@ -11,4 +11,6 @@ public interface TransactionQueryService {
     Transaction getTransaction(UUID id);
     List<Transaction> getTransactions(UUID accountId, LocalDateTime startDate, LocalDateTime endDate);
     boolean existsByAccountIdAndTransactionDate(UUID accountId, LocalDateTime localDateTime);
+    Transaction getRecentTransaction(UUID accountId);
+    long getRecentConsumption(UUID accountId, LocalDateTime from, LocalDateTime to);
 }

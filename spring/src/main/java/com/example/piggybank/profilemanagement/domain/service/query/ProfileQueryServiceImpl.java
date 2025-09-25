@@ -1,4 +1,4 @@
-package com.example.piggybank.profilemanagement.domain.service.facade;
+package com.example.piggybank.profilemanagement.domain.service.query;
 
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import com.example.piggybank.profilemanagement.domain.entity.Profile;

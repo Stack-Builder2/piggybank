@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "Domain_profile")
+@Entity(name =  "Domain_profile")
 @Table(name = "profile_tb")
 @Getter
 @Setter
