@@ -64,16 +64,14 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     }
     
     @Override
-    public void updateBalance(String userId, UUID accountId, long balance) {
-        Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 계좌입니다."));
+    public void updateBalance(UUID accountId, long balance) {
+        Account account = accountRepository.findByAccountId(accountId);
         account.updateBalance(balance);
     }
     
     @Override
-    public void updateConsumption(String userId, UUID accountId, long consumption) {
-        Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 계좌입니다."));
+    public void updateConsumption(UUID accountId, long consumption) {
+        Account account = accountRepository.findByAccountId(accountId);
         account.updateConsumption(consumption);
     }
 }

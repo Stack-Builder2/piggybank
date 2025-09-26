@@ -37,6 +37,15 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
         return transactionRepository.existsByAccountIdAndTransactionDate(accountId, localDateTime);
     }
     
+    @Override
+    public Transaction getRecentTransaction(UUID accountId) {
+        return transactionRepository.findTopByAccountIdOrderByTransactionDateDesc(accountId);
+    }
+    
+    @Override
+    public long getRecentConsumption(UUID accountId, LocalDateTime from, LocalDateTime to) {
+        return transactionRepository.sumIncomeAmountInPeriod(accountId, from, to);
+    }
     
     
 }

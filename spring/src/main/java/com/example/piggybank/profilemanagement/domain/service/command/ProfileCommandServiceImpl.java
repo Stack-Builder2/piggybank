@@ -27,7 +27,7 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     public Profile updateLimit(UUID userId, BigDecimal limit) {
         Profile profile = profileRepository.findByUserId(userId)
             .orElseThrow(() -> new EntityNotFoundException("프로필이 존재하지 않습니다."));
-        profile.setLimit(limit);
+        profile.updateLimit(limit);
         return profile;
     }
     
@@ -36,7 +36,7 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     public Profile updateGoal(UUID userId, BigDecimal goal) {
         Profile profile = profileRepository.findByUserId(userId)
             .orElseThrow(() -> new EntityNotFoundException("프로필이 존재하지 않습니다."));
-        profile.setLimit(goal);
+        profile.updateGoal(goal);
         return profile;
     }
 }

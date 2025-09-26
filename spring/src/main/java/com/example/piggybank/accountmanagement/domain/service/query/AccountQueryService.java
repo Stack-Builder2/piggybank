@@ -9,4 +9,6 @@ public interface AccountQueryService {
     public Account getAccount(UUID userId, String accountNum);
     public Account getAccount(UUID userId, UUID accountId);
     public List<Account> getAccounts(UUID userId);
+    public long getUserConsumption(UUID userId);
+    public long getUserBalance(UUID userId);
 }
