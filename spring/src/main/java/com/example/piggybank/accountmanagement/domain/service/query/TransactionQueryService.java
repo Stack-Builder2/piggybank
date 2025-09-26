@@ -1,7 +1,5 @@
 package com.example.piggybank.accountmanagement.domain.service.query;
 
-import com.example.piggybank.accountmanagement.api.dto.request.CreateTransactionRequest;
-import com.example.piggybank.accountmanagement.api.dto.request.GetTransactionRequest;
 import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import java.time.LocalDateTime;
 import java.util.List;
