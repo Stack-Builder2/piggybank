@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface TransactionCommandService {
     
     void save(Transaction transaction);
-
+    public void save(FromCodefResponse dto, UUID accountId);
     void updateCategory(CategoryIdUpdateRequest request);
 
 }

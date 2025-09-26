@@ -40,7 +40,7 @@ public class TransactionController {
         @Operation(summary = "거래 소비 패턴 분석", description = "계좌 거래내역을 통한 소비 패턴 분석")
         @PostMapping("/analyze")
         public ResponseEntity<AnalyzeResponse> analyzeTransaction(@RequestBody TransactionRequest request) {
-            transactionService.analyzeCategory(request); // 비동기 이벤트 발행
+            transactionService.analyzeCategory(request);
             return ResponseEntity.ok(new AnalyzeResponse(request.transactionId(), null));
         }
 

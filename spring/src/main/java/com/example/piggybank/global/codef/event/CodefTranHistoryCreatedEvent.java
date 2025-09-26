@@ -1,8 +1,10 @@
 package com.example.piggybank.global.codef.event;
 
+import com.example.piggybank.accountmanagement.api.dto.response.FromCodefResponse;
 import com.example.piggybank.global.codef.dto.res.CodefTransactionResDto.TranHistory;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import lombok.Getter;
 
 @Getter

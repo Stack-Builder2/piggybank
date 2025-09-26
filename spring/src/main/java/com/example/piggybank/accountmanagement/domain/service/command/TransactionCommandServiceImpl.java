@@ -1,9 +1,12 @@
 package com.example.piggybank.accountmanagement.domain.service.command;
 
 import com.example.piggybank.accountmanagement.api.dto.request.CategoryIdUpdateRequest;
+import com.example.piggybank.accountmanagement.api.dto.response.FromCodefResponse;
 import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import com.example.piggybank.accountmanagement.infrastructure.repository.TransactionRepository;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
+import java.math.BigDecimal;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,18 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     
     @Override
     public void save(Transaction transaction) {
+        transactionRepository.save(transaction);
+    }
+    
+    @Override
+    public void save(FromCodefResponse dto, UUID accountId) {
+        Transaction transaction = Transaction.builder()
+            .accountId(accountId)
+            .transactionDate(dto.transactionDate())
+            .amount(BigDecimal.valueOf(dto.amount()))
+            .description(dto.description())
+            .inputType(dto.inoutType())
+            .build();
         transactionRepository.save(transaction);
     }
 
