@@ -20,5 +20,4 @@ public interface AccountFacadeService {
     public void updateConsumption(UUID accountId);
     public String compareConsumption(UUID userId, BigDecimal limit);
     public String compareBalance(UUID userId,BigDecimal goal);
-    public String test();
 }

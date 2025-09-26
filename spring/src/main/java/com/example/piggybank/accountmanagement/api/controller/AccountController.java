@@ -54,11 +54,4 @@ public class AccountController {
         List<Account> accountIds = accountService.getAccounts(userId);
         return ResponseEntity.ok(accountIds);
     }
-    
-    @Operation(summary = "consumption 비교", description = "1 나오면 성공")
-    @GetMapping("/event/test")
-    public ResponseEntity<String> testEvent(@AuthenticationPrincipal String userId) {
-        String response = accountService.test();
-        return ResponseEntity.ok(response);
-    }
 }

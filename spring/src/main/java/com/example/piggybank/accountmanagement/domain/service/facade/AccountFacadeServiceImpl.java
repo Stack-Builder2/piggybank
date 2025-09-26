@@ -5,15 +5,12 @@ import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequ
 import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
 import com.example.piggybank.accountmanagement.api.dto.response.AccountUpdateResponse;
 import com.example.piggybank.accountmanagement.domain.entity.Account;
-import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import com.example.piggybank.accountmanagement.domain.service.command.AccountCommandService;
 import com.example.piggybank.accountmanagement.domain.service.query.AccountQueryService;
 import com.example.piggybank.accountmanagement.domain.service.query.TransactionQueryService;
 import com.example.piggybank.accountmanagement.event.AccountCreatedEvent;
-import com.example.piggybank.accountmanagement.event.TestEvent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -106,27 +103,6 @@ public class AccountFacadeServiceImpl implements AccountFacadeService{
             return "목표 금액을 초과했습니다.";
         }
         return "목표 금액을 초과하지 못했습니다.";
-    }
-    
-    @Override
-    public String test() {
-        
-        TestEvent event = new TestEvent(
-            this,
-            null,
-            null,
-            "TEST"
-        );
-        
-        eventPublisher.publishEvent(event);                                  // // 이벤트 발행 (동기/비동기 여부는 리스너 설정에 따름)
-        
-        try {
-            // // 응답 대기 (최대 3초). 필요에 맞게 타임아웃 조정
-            return event.getReplyFuture().get(3, java.util.concurrent.TimeUnit.SECONDS);
-        } catch (Exception e) {
-            // // 타임아웃 또는 예외 시 기본값/예외 처리
-            throw new IllegalStateException("리스너 응답을 받지 못했습니다.", e);
-        }
     }
     
 }
