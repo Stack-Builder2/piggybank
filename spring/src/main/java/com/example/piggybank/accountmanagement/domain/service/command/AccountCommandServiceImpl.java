@@ -5,7 +5,8 @@ import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequ
 import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
 import com.example.piggybank.accountmanagement.domain.entity.Account;
 import com.example.piggybank.accountmanagement.infrastructure.repository.AccountRepository;
-import com.example.piggybank.global.error.exception.EntityNotFoundException;
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     @Override
     public AccountCreateResponse setConnectedId(String accountId, String userId, String connectedId) {
         Account account = accountRepository.findByAccountIdAndUserId(UUID.fromString(accountId), UUID.fromString(userId))
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 계좌입니다."));
+            .orElseThrow(() -> new BusinessException(ErrorCode.TRANSACTION_NOT_FOUND));
         account.setConnectedId(connectedId);
         
         return new AccountCreateResponse(
@@ -50,7 +51,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     public void updateAccount(String userId, UUID accountId, AccountUpdateRequest request) {
 
         Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 계좌입니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.TRANSACTION_NOT_FOUND));
 
         account.updateAccount(request.accountNum(), request.bankName());
     }
@@ -58,7 +59,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     public void deleteAccount(String userId, UUID accountId) {
 
         Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 계좌입니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.TRANSACTION_NOT_FOUND));
 
         account.deleteAccount();
     }

@@ -14,7 +14,6 @@ import com.example.piggybank.accountmanagement.infrastructure.event.AnalyzeTrans
 import com.example.piggybank.accountmanagement.util.TransactionCodefMapper;
 import com.example.piggybank.global.codef.dto.res.CodefTransactionResDto.TranHistory;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -55,17 +54,28 @@ public class TransactionFacadeServiceImpl implements TransactionFacadeService {
     }
     
     @Override
-    public void createTransactions(List<TranHistory> transactions, UUID accountId) {
+    public List<Object> createTransactions(List<TranHistory> transactions, UUID accountId) {
         
         List<FromCodefResponse> dtos = TransactionCodefMapper.fromList(transactions);
         
-        List<FromCodefResponse> filteredDtos = new ArrayList<>(dtos);
-        filteredDtos.removeIf(dto ->
-            transactionQueryService.existsByAccountIdAndTransactionDate(accountId, dto.transactionDate())
-        );
+        for(FromCodefResponse dto : dtos) {
+            boolean exists = transactionQueryService.existsByAccountIdAndTransactionDate(
+                accountId,
+                dto.transactionDate()
+            );
+            if(!exists){
+                Transaction transaction = Transaction.builder()
+                    .accountId(accountId)
+                    .transactionDate(dto.transactionDate())
+                    .amount(BigDecimal.valueOf(dto.amount()))
+                    .description(dto.description())
+                    .inputType(dto.inoutType())
+                    .build();
+                transactionCommandService.save(transaction);
+            }
+        }
         
-        filteredDtos.forEach(dto -> transactionCommandService.save(dto, accountId));
-        
+        return List.of();
     }
 
     @Override

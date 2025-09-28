@@ -3,7 +3,6 @@ package com.example.piggybank.membermanagement.domain.service;
 import static com.example.piggybank.global.error.ErrorCode.*;
 
 import com.example.piggybank.global.error.ErrorCode;
-import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import com.example.piggybank.global.error.exception.BusinessException;
 import com.example.piggybank.membermanagement.domain.entity.Member;
 import com.example.piggybank.membermanagement.domain.service.query.MemberQueryService;
@@ -52,7 +51,7 @@ public class PasswordChangeServiceImpl implements PasswordChangeService {
         }
 
         Member member = memberQueryService.findByEmail(email)
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         member.updatePassword(passwordEncoder.encode(newPassword));
 

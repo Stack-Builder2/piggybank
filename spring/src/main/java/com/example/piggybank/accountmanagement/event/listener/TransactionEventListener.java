@@ -1,9 +1,7 @@
 package com.example.piggybank.accountmanagement.event.listener;
 
-import com.example.piggybank.accountmanagement.api.dto.response.FromCodefResponse;
 import com.example.piggybank.accountmanagement.domain.service.facade.TransactionFacadeService;
 import com.example.piggybank.global.codef.event.CodefTranHistoryCreatedEvent;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
