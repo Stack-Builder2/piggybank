@@ -18,6 +18,11 @@ public enum ErrorCode {
 
   CATEGORY_NOT_FOUND(404, "CT001", "Category Not Found"),
 
+  // 추가
+  ACCOUNT_NOT_FOUND(404, "A001", "Account Not Found"),
+  TRANSACTION_NOT_FOUND(404, "T002", "Transaction Not Found"),
+  PROFILE_NOT_FOUND(404, "P001", "Profile Not Found"),
+
   INVALID_TOKEN(400, "T001", "Invalid Token Value");
 
   private final int status;

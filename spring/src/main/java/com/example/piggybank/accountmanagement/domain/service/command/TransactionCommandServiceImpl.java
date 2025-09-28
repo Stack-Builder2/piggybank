@@ -4,7 +4,8 @@ import com.example.piggybank.accountmanagement.api.dto.request.CategoryIdUpdateR
 import com.example.piggybank.accountmanagement.api.dto.response.FromCodefResponse;
 import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import com.example.piggybank.accountmanagement.infrastructure.repository.TransactionRepository;
-import com.example.piggybank.global.error.exception.EntityNotFoundException;
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     @Override
     public void updateCategory(CategoryIdUpdateRequest request) {
         Transaction transaction = transactionRepository.findById(request.transactionId())
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 거래내역입니다."));
+            .orElseThrow(() -> new BusinessException(ErrorCode.TRANSACTION_NOT_FOUND));
 
         transaction.updateCategory(request.categoryId());
     }

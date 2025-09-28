@@ -52,7 +52,7 @@ public class PasswordChangeServiceImpl implements PasswordChangeService {
         }
 
         Member member = memberQueryService.findByEmail(email)
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         member.updatePassword(passwordEncoder.encode(newPassword));
 
