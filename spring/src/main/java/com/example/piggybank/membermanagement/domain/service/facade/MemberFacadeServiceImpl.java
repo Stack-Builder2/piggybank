@@ -3,7 +3,6 @@ package com.example.piggybank.membermanagement.domain.service.facade;
 import static com.example.piggybank.global.error.ErrorCode.*;
 
 import com.example.piggybank.global.error.ErrorCode;
-import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import com.example.piggybank.global.error.exception.BusinessException;
 import com.example.piggybank.membermanagement.api.dto.request.LoginRequest;
 import com.example.piggybank.membermanagement.api.dto.request.SignUpRequest;
@@ -31,7 +30,7 @@ public class MemberFacadeServiceImpl {
     public TokenResponse login(LoginRequest request) {
 
         Member member = memberQueryService.findByEmail(request.email())
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         if(!memberCommandService.validatePassword(request.password(), member.getPassword())) {
             throw new BadCredentialsException("로그인에 실패하였습니다.");
@@ -53,7 +52,7 @@ public class MemberFacadeServiceImpl {
     @Transactional(rollbackFor = Exception.class)
     public void changePassword(UserUpdateRequest request) {
         Member member = memberQueryService.findById(request.userId())
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         String newPassword = memberCommandService.encodePassword(request.password());
 
@@ -63,7 +62,7 @@ public class MemberFacadeServiceImpl {
     @Transactional(rollbackFor = Exception.class)
     public void softDeleteMember(String email) {
         Member member = memberQueryService.findByEmail(email)
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         member.softDelete(member.getUserId());
     }

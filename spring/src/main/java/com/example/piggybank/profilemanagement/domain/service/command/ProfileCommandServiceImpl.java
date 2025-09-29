@@ -1,6 +1,7 @@
 package com.example.piggybank.profilemanagement.domain.service.command;
 
-import com.example.piggybank.global.error.exception.EntityNotFoundException;
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import com.example.piggybank.profilemanagement.domain.entity.Profile;
 import com.example.piggybank.profilemanagement.infrastructure.repository.ProfileRepository;
 import jakarta.transaction.Transactional;
@@ -26,7 +27,7 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     @Transactional
     public Profile updateLimit(UUID userId, BigDecimal limit) {
         Profile profile = profileRepository.findByUserId(userId)
-            .orElseThrow(() -> new EntityNotFoundException("프로필이 존재하지 않습니다."));
+            .orElseThrow(() -> new BusinessException(ErrorCode.PROFILE_NOT_FOUND));
         profile.updateLimit(limit);
         return profile;
     }
@@ -35,7 +36,7 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     @Transactional
     public Profile updateGoal(UUID userId, BigDecimal goal) {
         Profile profile = profileRepository.findByUserId(userId)
-            .orElseThrow(() -> new EntityNotFoundException("프로필이 존재하지 않습니다."));
+            .orElseThrow(() -> new BusinessException(ErrorCode.PROFILE_NOT_FOUND));
         profile.updateGoal(goal);
         return profile;
     }
