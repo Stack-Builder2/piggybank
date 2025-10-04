@@ -11,10 +11,13 @@ public enum ErrorCode {
   RESOURCE_NOT_FOUND(404, "C004", "Resource Not Found"),
   METHOD_NOT_ALLOWED(405, "C005", "Method Not Allowed"),
   INTERNAL_SERVER_ERROR(500, "C006", "Server Error"),
+  GATEWAY_TIMEOUT(501, "C007", "Gateway Timeout"),
 
   EMAIL_DUPLICATION(400, "U001", "Email is Duplicated"),
   USER_NOT_FOUND(404, "U002", "User Not Found"),
   PASSWORD_NOT_MATCH(400, "U003", "Password Not Match"),
+  
+  PROFILE_DUPLICATION(400, "P001", "Profile Duplication"),
 
   CATEGORY_NOT_FOUND(404, "CT001", "Category Not Found"),
 
