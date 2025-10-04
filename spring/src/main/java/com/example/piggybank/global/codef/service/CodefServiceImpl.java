@@ -50,6 +50,16 @@ public class CodefServiceImpl implements CodefService {
     @Value("${account.api.secret}")
     private String CLIENT_SECRET;
     
+    @Value("${codef.api.access-token-url}")
+    private String ACCESS_TOKEN_URL;
+    
+    @Value("${codef.api.connected-id-url}")
+    private String CONNECTED_ID_URL;
+    
+    @Value("${codef.api.transaction-request-url}")
+    private String TRANSACTION_REQUEST_URL;
+    
+    
     private final ObjectMapper mapper = new ObjectMapper();
     private final ApplicationEventPublisher eventPublisher;
     
@@ -74,7 +84,7 @@ public class CodefServiceImpl implements CodefService {
         RestTemplate rt = new RestTemplate();
         
         ResponseEntity<String> response = rt.exchange(
-            "https://oauth.codef.io/oauth/token",
+            ACCESS_TOKEN_URL,
             HttpMethod.POST,
             entity,
             String.class
@@ -128,7 +138,7 @@ public class CodefServiceImpl implements CodefService {
         RestTemplate rt = new RestTemplate();
         
         ResponseEntity<String> response = rt.exchange(
-            "https://development.codef.io/v1/account/create",
+            CONNECTED_ID_URL,
             HttpMethod.POST,
             entity,
             String.class
@@ -173,7 +183,7 @@ public class CodefServiceImpl implements CodefService {
         RestTemplate rt = new RestTemplate();
         
         ResponseEntity<String> response = rt.exchange(
-            "https://development.codef.io/v1/kr/bank/p/account/transaction-list",
+            TRANSACTION_REQUEST_URL,
             HttpMethod.POST,
             entity,
             String.class

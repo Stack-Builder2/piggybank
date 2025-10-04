@@ -5,4 +5,5 @@ import java.util.UUID;
 
 public interface ProfileQueryService {
     public Profile findByUserId(UUID userId);
+    public boolean existsByUserId(UUID userId);
 }

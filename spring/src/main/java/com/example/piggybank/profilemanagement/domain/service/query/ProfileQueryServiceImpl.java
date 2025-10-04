@@ -19,4 +19,9 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
             .orElseThrow(() -> new EntityNotFoundException("프로필이 존재하지 않습니다."));
         return profile;
     }
+    
+    @Override
+    public boolean existsByUserId(UUID userId) {
+        return profileRepository.existsById(userId);
+    }
 }
