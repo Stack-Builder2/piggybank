@@ -1,5 +1,6 @@
 package com.example.piggybank.profilemanagement.domain.service.facade;
 
+import com.example.piggybank.global.common.dto.ResponseDto;
 import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.BusinessException;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
@@ -18,6 +19,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,39 +39,35 @@ public class ProfileFacadeServiceImpl implements ProfileFacadeService {
     }
     
     @Override
-    public Profile updateLimit(String userId, @Valid ProfileAddLimitRequest request) {
+    public ResponseEntity<ResponseDto> updateLimit(String userId, @Valid ProfileAddLimitRequest request) {
         if (!profileQueryService.existsByUserId(toUUID(userId))) {
             throw new EntityNotFoundException("사용자를 찾을 수 없습니다.");
         }
         Profile profile = profileCommandService.updateLimit(toUUID(userId), request.limit());
-        return profile;
+        return ResponseDto.success("한도 금액을 업데이트했습니다.");
     }
     
     @Override
-    public Profile updateGoal(String userId, @Valid ProfileAddGoalRequest request) {
+    public ResponseEntity<ResponseDto> updateGoal(String userId, @Valid ProfileAddGoalRequest request) {
         if (!profileQueryService.existsByUserId(toUUID(userId))) {
             throw new EntityNotFoundException("사용자를 찾을 수 없습니다.");
         }
         Profile profile = profileCommandService.updateGoal(toUUID(userId), request.goal());
-        return profile;
+        return ResponseDto.success("목표 금액을 업데이트했습니다.");
     }
 
     @Override
-    public ProfileResponse createProfile(@Valid ProfileRequest request) {
+    public ResponseEntity<ProfileResponse> createProfile(@Valid ProfileRequest request) {
         if(profileQueryService.existsByUserId(request.userId())){
             throw new BusinessException("이미 존재하는 유저 프로필입니다.", ErrorCode.PROFILE_DUPLICATION);
         }
         profileCommandService.createProfile(request.userId());
 
-        return new ProfileResponse(
-            request.userId(),
-            BigDecimal.ZERO,
-            BigDecimal.ZERO
-        );
+        return ProfileResponse.success(request.userId(), "프로필 생성이 완료되었습니다.");
     }
     
     @Override
-    public String compareLimit(String userId) {
+    public ResponseEntity<ResponseDto> compareLimit(String userId) {
         Profile profile = profileQueryService.findByUserId(UUID.fromString(userId));
         if(profile.getLimit().compareTo(BigDecimal.ZERO) < 1) {
             throw new BusinessException("한도 금액이 올바르지 않습니다", ErrorCode.INVALID_INPUT_VALUE);
@@ -83,14 +81,14 @@ public class ProfileFacadeServiceImpl implements ProfileFacadeService {
         String message = null;
         try {
             message = event.getReplyFuture().get(3, TimeUnit.SECONDS);
-            return message;
+            return ResponseDto.success(message);
         } catch (Exception e) {
             throw new BusinessException("리스너 응답을 받지 못했습니다.", ErrorCode.GATEWAY_TIMEOUT);
         }
     }
     
     @Override
-    public String compareGoal(String userId) {
+    public ResponseEntity<ResponseDto> compareGoal(String userId) {
         Profile profile = profileQueryService.findByUserId(UUID.fromString(userId));
         if(profile.getGoal() == null){
             throw new BusinessException("목표 금액을 설정하지 않았습니다.", ErrorCode.INVALID_INPUT_VALUE);
@@ -107,7 +105,7 @@ public class ProfileFacadeServiceImpl implements ProfileFacadeService {
         String message = null;
         try {
             message = event.getReplyFuture().get(3, TimeUnit.SECONDS);
-            return message;
+            return ResponseDto.success(message);
         } catch (Exception e) {
             throw new BusinessException("리스너 응답을 받지 못했습니다.", ErrorCode.GATEWAY_TIMEOUT);
         }

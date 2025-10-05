@@ -18,8 +18,10 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     @Override
     public void createProfile(UUID userId) {
         Profile profile = Profile.builder()
-                .userId(userId)
-                    .build();
+            .userId(userId)
+            .goal(BigDecimal.ZERO)
+            .limit(BigDecimal.ZERO)
+            .build();
         profileRepository.save(profile);
     }
     

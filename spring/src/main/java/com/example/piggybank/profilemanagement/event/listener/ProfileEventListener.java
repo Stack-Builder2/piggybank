@@ -7,6 +7,7 @@ import com.example.piggybank.profilemanagement.domain.service.facade.ProfileFaca
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +18,7 @@ public class ProfileEventListener {
     
     @EventListener
     public void handleMemberCreated(MemberCreatedEvent event) {
-        ProfileResponse response = profileFacadeService.createProfile(new ProfileRequest(event.getUserId()));
+        ResponseEntity<ProfileResponse> response = profileFacadeService.createProfile(new ProfileRequest(event.getUserId()));
         log.info("Created profile: {}", response);
     }
 }
