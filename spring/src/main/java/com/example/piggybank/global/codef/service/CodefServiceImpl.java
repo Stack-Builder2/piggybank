@@ -1,5 +1,10 @@
 package com.example.piggybank.global.codef.service;
 
+import static com.example.piggybank.global.error.ErrorCode.CONNECTED_ID_JSON_PARSING_FAILED;
+import static com.example.piggybank.global.error.ErrorCode.INVALID_ACCESS_TOKEN;
+import static com.example.piggybank.global.error.ErrorCode.PASSWORD_ENCRYPTION_FAILED;
+import static com.example.piggybank.global.error.ErrorCode.TRANSACTION_JSON_PARSING_FAILED;
+
 import com.example.piggybank.global.codef.dto.req.CodefConnectedIdReqDto;
 import com.example.piggybank.global.codef.dto.res.CodefConnectedIdResDto;
 import com.example.piggybank.global.codef.dto.req.CodefTransactionReqDto;
@@ -8,6 +13,7 @@ import com.example.piggybank.global.codef.dto.res.CodefTransactionResDto.TranHis
 import com.example.piggybank.global.codef.enums.BankType;
 import com.example.piggybank.global.codef.event.CodefIdCreatedEvent;
 import com.example.piggybank.global.codef.event.CodefTranHistoryCreatedEvent;
+import com.example.piggybank.global.error.exception.BusinessException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -87,7 +93,7 @@ public class CodefServiceImpl implements CodefService {
             log.info("access_token : " + accessToken);
             return accessToken;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to parse access_token", e);
+            throw new BusinessException("Failed to parse access_token", INVALID_ACCESS_TOKEN);
         }
     }
     
@@ -104,7 +110,7 @@ public class CodefServiceImpl implements CodefService {
         try {
             encodedPassword = encryptPassword(reqDto.bankPassword());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new BusinessException(PASSWORD_ENCRYPTION_FAILED);
         }
         
         HttpHeaders headers = new HttpHeaders();
@@ -184,10 +190,10 @@ public class CodefServiceImpl implements CodefService {
         
         CodefTransactionResDto codefTransactionResDto = transactionToJson(decodedResponse);
         List<TranHistory> tranHistoryList = codefTransactionResDto.getTranHistories();
-        
+        String balance = codefTransactionResDto.getBalance();
         log.info("tranHistoryList : " + tranHistoryList);
         
-        eventPublisher.publishEvent(new CodefTranHistoryCreatedEvent(this, tranHistoryList, reqDto.accountId()));
+        eventPublisher.publishEvent(new CodefTranHistoryCreatedEvent(this, tranHistoryList, reqDto.accountId(), balance));
         
         return tranHistoryList;
     }
@@ -221,7 +227,7 @@ public class CodefServiceImpl implements CodefService {
         try{
             response = objectMapper.readValue(decodedUrlConnectedId, CodefConnectedIdResDto.class);
         } catch(JsonProcessingException e){
-            throw new RuntimeException("Connected Id Json 파싱 중 오류 발생");
+            throw new BusinessException("Connected Id Json 파싱 중 오류 발생", CONNECTED_ID_JSON_PARSING_FAILED);
         }
         
         return response;
@@ -237,7 +243,7 @@ public class CodefServiceImpl implements CodefService {
         try {
             response = objectMapper.readValue(decodedUrlTransaction, CodefTransactionResDto.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("거래내역 Json 파싱 중 오류 발생");
+            throw new BusinessException("거래내역 Json 파싱 중 오류 발생", TRANSACTION_JSON_PARSING_FAILED);
         }
         
         return response;

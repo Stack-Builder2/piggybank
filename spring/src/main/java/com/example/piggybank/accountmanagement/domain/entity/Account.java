@@ -1,6 +1,11 @@
 package com.example.piggybank.accountmanagement.domain.entity;
 
+import static com.example.piggybank.global.common.Status.CREATED;
+import static com.example.piggybank.global.common.Status.DELETED;
+import static com.example.piggybank.global.common.Status.UPDATED;
+
 import com.example.piggybank.global.common.BaseTimeEntity;
+import com.example.piggybank.global.common.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -62,12 +67,12 @@ public class Account extends BaseTimeEntity {
         if (bankName != null && !bankName.isBlank()) {
             this.bankName = bankName;
         }
-        status = 10L;
+        status = UPDATED;
     }
     
     public void setConnectedId(String connectedId) {
         this.connectedId = connectedId;
-        this.status = 1L;
+        this.status = CREATED;
     }
     
     public void updateBalance(long balance) {
@@ -79,6 +84,6 @@ public class Account extends BaseTimeEntity {
     }
 
     public void deleteAccount() {
-        status = 99L;
+        status = DELETED;
     }
 }

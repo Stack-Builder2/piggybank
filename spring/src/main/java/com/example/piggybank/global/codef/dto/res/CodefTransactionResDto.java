@@ -72,4 +72,10 @@ public record CodefTransactionResDto(
         }
         return Collections.emptyList();
     }
+    public String getBalance(){
+        if(data != null && data.resAccountBalance() != null){
+            return data.resAccountBalance();
+        }
+        return null;
+    }
 }

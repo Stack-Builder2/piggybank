@@ -3,7 +3,7 @@ package com.example.piggybank.profilemanagement.event.listener;
 import com.example.piggybank.membermanagement.event.MemberCreatedEvent;
 import com.example.piggybank.profilemanagement.api.dto.req.ProfileRequest;
 import com.example.piggybank.profilemanagement.api.dto.resp.ProfileResponse;
-import com.example.piggybank.profilemanagement.domain.service.query.ProfileFacadeService;
+import com.example.piggybank.profilemanagement.domain.service.facade.ProfileFacadeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

@@ -11,6 +11,6 @@ public interface AccountCommandService {
     AccountCreateResponse setConnectedId(String accountId, String userId, String connectedId);
     public void updateAccount(String userId, UUID accountId, AccountUpdateRequest request);
     public void deleteAccount(String userId, UUID accountId);
-    public void updateBalance(String userId, UUID accountId, long balance);
-    public void updateConsumption(String userId, UUID accountId, long consumption);
+    public void updateBalance(UUID accountId, long balance);
+    public void updateConsumption(UUID accountId, long consumption);
 }

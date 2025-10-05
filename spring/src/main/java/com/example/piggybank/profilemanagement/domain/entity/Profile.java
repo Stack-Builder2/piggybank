@@ -1,6 +1,9 @@
 package com.example.piggybank.profilemanagement.domain.entity;
 
+import static com.example.piggybank.global.common.Status.DELETED;
+
 import com.example.piggybank.global.common.BaseTimeEntity;
+import com.example.piggybank.global.common.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -50,14 +53,14 @@ public class Profile extends BaseTimeEntity {
     }
 
     public void delete(String email) {
-        status = 99L;
+        status = DELETED;
     }
 
-    public void updateGoal(UUID profileId, BigDecimal goal) {
+    public void updateGoal(BigDecimal goal) {
         this.goal = goal;
     }
 
-    public void updateLimit(UUID profileId, BigDecimal limit) {
+    public void updateLimit(BigDecimal limit) {
         this.limit = limit;
     }
 }

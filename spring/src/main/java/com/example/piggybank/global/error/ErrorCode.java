@@ -18,7 +18,21 @@ public enum ErrorCode {
 
   CATEGORY_NOT_FOUND(404, "CT001", "Category Not Found"),
 
-  INVALID_TOKEN(400, "T001", "Invalid Token Value");
+  // 추가
+  ACCOUNT_NOT_FOUND(404, "A001", "Account Not Found"),
+  TRANSACTION_NOT_FOUND(404, "T002", "Transaction Not Found"),
+  PROFILE_NOT_FOUND(404, "P001", "Profile Not Found"),
+
+  INVALID_TOKEN(400, "T001", "Invalid Token Value"),
+
+  INVALID_ACCESS_TOKEN(400, "AC001", "Failed to parse access_token"),
+  TRANSACTION_JSON_PARSING_FAILED(400, "AC002", "거래내역 Json 파싱 중 오류 발생"),
+  CONNECTED_ID_JSON_PARSING_FAILED(400, "AC003", "Connected Id Json 파싱 중 오류 발생"),
+  PASSWORD_ENCRYPTION_FAILED(500, "AC005", "비밀번호 암호화 중 오류 발생"),
+
+  EMAIL_SEND_FAILED(400, "E001", "HTML 이메일 발송 중 오류 발생"),
+
+  BALANCE_NOT_FOUND(400, "B001", "Balance cannot be null or empty");
 
   private final int status;
   private final String code;

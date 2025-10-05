@@ -1,11 +1,14 @@
 package com.example.piggybank.accountmanagement.domain.service.command;
 
+import static com.example.piggybank.global.error.ErrorCode.ACCOUNT_NOT_FOUND;
+
 import com.example.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
 import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
 import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
 import com.example.piggybank.accountmanagement.domain.entity.Account;
 import com.example.piggybank.accountmanagement.infrastructure.repository.AccountRepository;
-import com.example.piggybank.global.error.exception.EntityNotFoundException;
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +24,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
 
     public AccountCreateResponse createAccount(String userId, AccountCreateRequest request) {
         if(accountRepository.findByUserIdAndAccountNum(UUID.fromString(userId), request.accountNum()) != null) return null;
-        
+
         Account account = Account.builder()
                 .userId(UUID.fromString(userId))
                 .accountNum(request.accountNum())
@@ -34,23 +37,23 @@ public class AccountCommandServiceImpl implements AccountCommandService {
                 account
         );
     }
-    
+
     @Override
     public AccountCreateResponse setConnectedId(String accountId, String userId, String connectedId) {
         Account account = accountRepository.findByAccountIdAndUserId(UUID.fromString(accountId), UUID.fromString(userId))
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 계좌입니다."));
+                .orElseThrow(() -> new BusinessException("계좌를 찾을 수 없습니다.", ACCOUNT_NOT_FOUND));
         account.setConnectedId(connectedId);
-        
+
         return new AccountCreateResponse(
-            account.getUserId(),
-            account
+                account.getUserId(),
+                account
         );
     }
-    
+
     public void updateAccount(String userId, UUID accountId, AccountUpdateRequest request) {
 
         Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 계좌입니다."));
+                .orElseThrow(() -> new BusinessException("계좌를 찾을 수 없습니다.", ACCOUNT_NOT_FOUND));
 
         account.updateAccount(request.accountNum(), request.bankName());
     }
@@ -58,22 +61,20 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     public void deleteAccount(String userId, UUID accountId) {
 
         Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않은 계좌입니다."));
+                .orElseThrow(() -> new BusinessException("계좌를 찾을 수 없습니다.", ACCOUNT_NOT_FOUND));
 
         account.deleteAccount();
     }
-    
+
     @Override
-    public void updateBalance(String userId, UUID accountId, long balance) {
-        Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 계좌입니다."));
+    public void updateBalance(UUID accountId, long balance) {
+        Account account = accountRepository.findByAccountId(accountId);
         account.updateBalance(balance);
     }
-    
+
     @Override
-    public void updateConsumption(String userId, UUID accountId, long consumption) {
-        Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-            .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 계좌입니다."));
+    public void updateConsumption(UUID accountId, long consumption) {
+        Account account = accountRepository.findByAccountId(accountId);
         account.updateConsumption(consumption);
     }
 }

@@ -1,7 +1,5 @@
 package com.example.piggybank.accountmanagement.domain.service.query;
 
-import com.example.piggybank.accountmanagement.api.dto.request.CreateTransactionRequest;
-import com.example.piggybank.accountmanagement.api.dto.request.GetTransactionRequest;
 import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,4 +9,6 @@ public interface TransactionQueryService {
     Transaction getTransaction(UUID id);
     List<Transaction> getTransactions(UUID accountId, LocalDateTime startDate, LocalDateTime endDate);
     boolean existsByAccountIdAndTransactionDate(UUID accountId, LocalDateTime localDateTime);
+    Transaction getRecentTransaction(UUID accountId);
+    long getRecentConsumption(UUID accountId, LocalDateTime from, LocalDateTime to);
 }

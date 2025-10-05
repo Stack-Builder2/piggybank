@@ -1,6 +1,10 @@
 package com.example.piggybank.accountmanagement.domain.entity;
 
+import static com.example.piggybank.global.error.ErrorCode.CATEGORY_NOT_FOUND;
+
 import com.example.piggybank.global.common.BaseTimeEntity;
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,8 +41,15 @@ public class Category extends BaseTimeEntity {
         this.name = name;
     }
 
+    public static Long requireNonNullCategoryId(Long categoryId) {
+        if(categoryId == null) {
+            throw new BusinessException(CATEGORY_NOT_FOUND);
+        }
+        return categoryId;
+    }
+
     public void updateCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+        this.categoryId = requireNonNullCategoryId(categoryId);
     }
 
     public void updateCategoryName(String categoryName) {

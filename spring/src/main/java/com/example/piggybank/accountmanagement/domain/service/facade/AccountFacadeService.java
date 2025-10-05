@@ -16,6 +16,8 @@ public interface AccountFacadeService {
     public AccountUpdateResponse updateAccount(String userId, UUID accountId, AccountUpdateRequest request);
     public void deleteAccount(String userID, UUID accountId);
     public List<Account> getAccounts(String userId);
-    public void updateBalance(String userId, String accountId, long balance);
-    public void updateConsumption(String userId, String accountId, long consumption);
+    public void updateBalance(UUID accountId, String balance);
+    public void updateConsumption(UUID accountId);
+    public String compareConsumption(UUID userId, BigDecimal limit);
+    public String compareBalance(UUID userId,BigDecimal goal);
 }

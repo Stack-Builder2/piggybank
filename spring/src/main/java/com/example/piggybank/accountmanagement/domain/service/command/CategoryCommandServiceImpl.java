@@ -5,7 +5,8 @@ import com.example.piggybank.accountmanagement.api.dto.request.DeleteCategoryReq
 import com.example.piggybank.accountmanagement.api.dto.request.UpdateCategoryRequest;
 import com.example.piggybank.accountmanagement.domain.entity.Category;
 import com.example.piggybank.accountmanagement.infrastructure.repository.CategoryRepository;
-import com.example.piggybank.global.error.exception.EntityNotFoundException;
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class CategoryCommandServiceImpl implements CategoryCommandService {
     @Override
     public void updateCategory(UpdateCategoryRequest request) {
         Category category = categoryRepository.findByName(request.getOldCategoryName())
-            .orElseThrow(() -> new EntityNotFoundException("카테고리를 찾을 수 없습니다."));
+            .orElseThrow(() -> new BusinessException("카테고리를 찾을 수 없습니다.", ErrorCode.CATEGORY_NOT_FOUND));
 
         category.updateCategoryName(request.getNewCategoryName());
     }
@@ -35,7 +36,7 @@ public class CategoryCommandServiceImpl implements CategoryCommandService {
     @Override
     public void deleteCategory(DeleteCategoryRequest request) {
         Category category = categoryRepository.findByName(request.getCategoryName())
-            .orElseThrow(() -> new EntityNotFoundException(("카테고리를 찾을 수 없습니다.")));
+            .orElseThrow(() -> new BusinessException("카테고리를 찾을 수 없습니다.", ErrorCode.CATEGORY_NOT_FOUND));
 
         categoryRepository.delete(category);
     }
