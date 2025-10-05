@@ -22,6 +22,6 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     
     @Override
     public boolean existsByUserId(UUID userId) {
-        return profileRepository.existsById(userId);
+        return profileRepository.existsByUserId(userId);
     }
 }

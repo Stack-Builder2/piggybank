@@ -22,7 +22,8 @@ public class ResponseDto {
     }
     
     // code, message만 설정하는 생성자
-    protected ResponseDto(String message) {
+    public ResponseDto(String message) {
+        this.code = ResponseCode.SUCCESS;
         this.message = message;
         this.data = null;
     }
@@ -31,6 +32,11 @@ public class ResponseDto {
     public static ResponseEntity<ResponseDto> success(HttpStatus status) {
         ResponseDto body = new ResponseDto();
         return ResponseEntity.status(status).body(body);
+    }
+    
+    public static ResponseEntity<ResponseDto> success(String message) {
+        ResponseDto body = new ResponseDto(message);
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
     
     // 성공 응답 - data 포함
