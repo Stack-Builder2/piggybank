@@ -4,6 +4,8 @@ import static com.example.piggybank.global.common.Status.DELETED;
 
 import com.example.piggybank.global.common.BaseTimeEntity;
 import com.example.piggybank.global.common.Status;
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,7 +25,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "profile")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Profile extends BaseTimeEntity {
 
@@ -46,9 +48,9 @@ public class Profile extends BaseTimeEntity {
     @Builder
     public Profile(UUID profileId, UUID userId, BigDecimal goal, BigDecimal limit, Long version) {
         this.profileId = profileId;
-        this.userId = userId;
-        this.goal = goal;
-        this.limit = limit;
+        this.userId = requireNonNullUser(userId);
+        this.goal = requireNonNullMoney(goal);
+        this.limit = requireNonNullMoney(limit);
         this.version = version;
     }
 
@@ -57,10 +59,34 @@ public class Profile extends BaseTimeEntity {
     }
 
     public void updateGoal(BigDecimal goal) {
-        this.goal = goal;
+        
+        this.goal = normalizeMoney(requireNonNullMoney(goal));
     }
 
     public void updateLimit(BigDecimal limit) {
-        this.limit = limit;
+        this.limit = normalizeMoney(requireNonNullMoney(limit));
     }
+    
+    private static UUID requireNonNullUser(UUID userId) {
+        if (userId == null) {
+            throw new BusinessException("userId는 null일 수 없습니다.", ErrorCode.INVALID_INPUT_VALUE);
+        }
+        return userId;
+    }
+    
+    private static BigDecimal requireNonNullMoney(BigDecimal money) {
+        if (money == null) {
+            throw new BusinessException("금액은 NULL일 수 없습니다.", ErrorCode.INVALID_INPUT_VALUE);
+        }
+        return money;
+    }
+    
+    private static BigDecimal normalizeMoney(BigDecimal money) {
+        // // 음수 금지 + 스케일 고정(2) + 라운딩 정책 명확화
+        if (money.signum() < 0) {
+            throw new BusinessException("금액은 음수일 수 없습니다.", ErrorCode.INVALID_INPUT_VALUE);
+        }
+        return money.setScale(2, RoundingMode.HALF_UP);
+    }
+    
 }

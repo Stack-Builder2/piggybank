@@ -18,10 +18,13 @@ public class AccountEventListener {
         accountService.setConnectedId(event.getAccount().getAccountId().toString(), event.getAccount().getUserId().toString(), event.getConnectedId());
     }
 
+    
     @EventListener
     public void handleAccountUpdateListener(CodefTranHistoryCreatedEvent event) {
         accountService.updateBalance(event.getAccountId() ,event.getBalance());
         accountService.updateConsumption(event.getAccountId());
     }
 
+}
+    
 }
