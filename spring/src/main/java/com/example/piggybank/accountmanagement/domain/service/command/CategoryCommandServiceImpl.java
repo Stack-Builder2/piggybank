@@ -28,7 +28,7 @@ public class CategoryCommandServiceImpl implements CategoryCommandService {
     @Override
     public void updateCategory(UpdateCategoryRequest request) {
         Category category = categoryRepository.findByName(request.getOldCategoryName())
-            .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException("카테고리를 찾을 수 없습니다.", ErrorCode.CATEGORY_NOT_FOUND));
 
         category.updateCategoryName(request.getNewCategoryName());
     }
@@ -36,7 +36,7 @@ public class CategoryCommandServiceImpl implements CategoryCommandService {
     @Override
     public void deleteCategory(DeleteCategoryRequest request) {
         Category category = categoryRepository.findByName(request.getCategoryName())
-            .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException("카테고리를 찾을 수 없습니다.", ErrorCode.CATEGORY_NOT_FOUND));
 
         categoryRepository.delete(category);
     }

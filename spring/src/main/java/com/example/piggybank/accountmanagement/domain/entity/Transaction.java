@@ -1,6 +1,9 @@
 package com.example.piggybank.accountmanagement.domain.entity;
 
+import static com.example.piggybank.global.error.ErrorCode.CATEGORY_NOT_FOUND;
+
 import com.example.piggybank.global.common.BaseTimeEntity;
+import com.example.piggybank.global.error.exception.BusinessException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,8 +34,8 @@ public class Transaction extends BaseTimeEntity {
     @Column(name = "account_id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID accountId;
 
-    @Column(name = "category_id", nullable = false, columnDefinition = "BINARY(16)")
-    private Long categoryId;
+    @Column(name = "category_id", nullable = false)
+    private Long categoryId = 100L;
 
     @Column(nullable = false)
     private BigDecimal amount = BigDecimal.ZERO;
@@ -62,8 +65,15 @@ public class Transaction extends BaseTimeEntity {
         this.description = description;
     }
 
+    public static Long requireNonNullCategoryId(Long categoryId) {
+        if(categoryId == null) {
+            throw new BusinessException("카테고리를 찾을 수 없습니다", CATEGORY_NOT_FOUND);
+        }
+        return categoryId;
+    }
+
     public void updateCategory(Long categoryId) {
-        this.categoryId = categoryId;
+        this.categoryId = requireNonNullCategoryId(categoryId);
     }
 }
 

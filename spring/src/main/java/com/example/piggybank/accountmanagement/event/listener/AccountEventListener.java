@@ -10,18 +10,21 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class AccountEventListener {
-    
+
     private final AccountFacadeService accountService;
-    
+
     @EventListener
     public void handleCodefIdCreatedListener(CodefIdCreatedEvent event) {
         accountService.setConnectedId(event.getAccount().getAccountId().toString(), event.getAccount().getUserId().toString(), event.getConnectedId());
     }
+
     
     @EventListener
     public void handleAccountUpdateListener(CodefTranHistoryCreatedEvent event) {
         accountService.updateBalance(event.getAccountId() ,event.getBalance());
         accountService.updateConsumption(event.getAccountId());
     }
+
+}
     
 }

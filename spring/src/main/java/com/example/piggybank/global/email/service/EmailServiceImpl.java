@@ -1,5 +1,9 @@
 package com.example.piggybank.global.email.service;
 
+import static com.example.piggybank.global.error.ErrorCode.EMAIL_SEND_FAILED;
+
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +33,7 @@ public class EmailServiceImpl implements EmailService {
 
             emailSender.send(message);
         } catch (MessagingException e) {
-            throw new RuntimeException("HTML 이메일 발송 중 오류 발생", e);
+            throw new BusinessException("이메일 발송을 실패하였습니다.", EMAIL_SEND_FAILED);
         }
     }
 

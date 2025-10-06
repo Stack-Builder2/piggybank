@@ -1,5 +1,7 @@
 package com.example.piggybank.accountmanagement.domain.service.facade;
 
+import static com.example.piggybank.global.error.ErrorCode.BALANCE_NOT_FOUND;
+
 import com.example.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
 import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
 import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
@@ -9,6 +11,8 @@ import com.example.piggybank.accountmanagement.domain.service.command.AccountCom
 import com.example.piggybank.accountmanagement.domain.service.query.AccountQueryService;
 import com.example.piggybank.accountmanagement.domain.service.query.TransactionQueryService;
 import com.example.piggybank.accountmanagement.event.AccountCreatedEvent;
+import com.example.piggybank.global.error.ErrorCode;
+import com.example.piggybank.global.error.exception.BusinessException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -73,6 +77,10 @@ public class AccountFacadeServiceImpl implements AccountFacadeService{
     
     @Override
     public void updateBalance(UUID accountId, String balance) {
+        if (balance == null || balance.trim().isEmpty()) {
+            throw new BusinessException("Balance cannot be null or empty", BALANCE_NOT_FOUND);
+        }
+
         accountCommandService.updateBalance(accountId, Long.valueOf(balance));
     }
     

@@ -36,7 +36,7 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     @Override
     public void updateCategory(CategoryIdUpdateRequest request) {
         Transaction transaction = transactionRepository.findById(request.transactionId())
-            .orElseThrow(() -> new BusinessException(ErrorCode.TRANSACTION_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException("거래 내역을 찾을 수 없습니다.", ErrorCode.TRANSACTION_NOT_FOUND));
 
         transaction.updateCategory(request.categoryId());
     }

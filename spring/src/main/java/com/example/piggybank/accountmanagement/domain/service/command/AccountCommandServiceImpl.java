@@ -1,5 +1,7 @@
 package com.example.piggybank.accountmanagement.domain.service.command;
 
+import static com.example.piggybank.global.error.ErrorCode.ACCOUNT_NOT_FOUND;
+
 import com.example.piggybank.accountmanagement.api.dto.request.AccountCreateRequest;
 import com.example.piggybank.accountmanagement.api.dto.request.AccountUpdateRequest;
 import com.example.piggybank.accountmanagement.api.dto.response.AccountCreateResponse;
@@ -39,7 +41,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     @Override
     public AccountCreateResponse setConnectedId(String accountId, String userId, String connectedId) {
         Account account = accountRepository.findByAccountIdAndUserId(UUID.fromString(accountId), UUID.fromString(userId))
-                .orElseThrow(() -> new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException("계좌를 찾을 수 없습니다.", ACCOUNT_NOT_FOUND));
         account.setConnectedId(connectedId);
 
         return new AccountCreateResponse(
@@ -51,7 +53,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     public void updateAccount(String userId, UUID accountId, AccountUpdateRequest request) {
 
         Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-                .orElseThrow(() -> new BusinessException(ErrorCode.TRANSACTION_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException("계좌를 찾을 수 없습니다.", ACCOUNT_NOT_FOUND));
 
         account.updateAccount(request.accountNum(), request.bankName());
     }
@@ -59,7 +61,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     public void deleteAccount(String userId, UUID accountId) {
 
         Account account = accountRepository.findByAccountIdAndUserId(accountId, UUID.fromString(userId))
-                .orElseThrow(() -> new BusinessException(ErrorCode.TRANSACTION_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException("계좌를 찾을 수 없습니다.", ACCOUNT_NOT_FOUND));
 
         account.deleteAccount();
     }

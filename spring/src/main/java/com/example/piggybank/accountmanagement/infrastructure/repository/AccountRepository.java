@@ -1,6 +1,7 @@
 package com.example.piggybank.accountmanagement.infrastructure.repository;
 
 import com.example.piggybank.accountmanagement.domain.entity.Account;
+import com.example.piggybank.global.common.Status;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     
     Account findByUserIdAndAccountNum(UUID userId, String accountNum);
     
-    List<Account> findByUserIdAndStatusNot(UUID userId, Long status);
+    List<Account> findByUserIdAndStatusNot(UUID userId, Status status);
     
     interface ConsumptionOnly{
         Long getConsumption();

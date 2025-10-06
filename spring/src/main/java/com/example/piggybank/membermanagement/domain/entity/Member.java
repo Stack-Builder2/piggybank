@@ -1,6 +1,9 @@
 package com.example.piggybank.membermanagement.domain.entity;
 
+import static com.example.piggybank.global.common.Status.DELETED;
+
 import com.example.piggybank.global.common.BaseTimeEntity;
+import com.example.piggybank.global.common.Status;
 import jakarta.persistence.*;
 import java.util.UUID;
 import lombok.*;
@@ -48,6 +51,6 @@ public class Member extends BaseTimeEntity {
     }
 
     public void softDelete(UUID userId) {
-        this.status = 99L;
+        this.status = DELETED;
     }
 }

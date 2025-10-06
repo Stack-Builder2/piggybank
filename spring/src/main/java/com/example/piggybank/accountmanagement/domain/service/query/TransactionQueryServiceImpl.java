@@ -1,7 +1,10 @@
 package com.example.piggybank.accountmanagement.domain.service.query;
 
+import static com.example.piggybank.global.error.ErrorCode.ACCOUNT_NOT_FOUND;
+
 import com.example.piggybank.accountmanagement.domain.entity.Transaction;
 import com.example.piggybank.accountmanagement.infrastructure.repository.TransactionRepository;
+import com.example.piggybank.global.error.ErrorCode;
 import com.example.piggybank.global.error.exception.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
     @Override
     public Transaction getTransaction(UUID id) {
         return transactionRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("거래내역이 존재하지 않습니다."));
+            .orElseThrow(() -> new EntityNotFoundException(ACCOUNT_NOT_FOUND));
     }
     
     @Override
