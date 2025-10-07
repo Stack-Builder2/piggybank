@@ -49,17 +49,5 @@ public class ProfileController {
         return response;
     }
     
-    @Operation(summary = "limit 비교", description = "한도 금액과 account consumption 비교")
-    @GetMapping("/co-limit")
-    public ResponseEntity<String> coLimit(@AuthenticationPrincipal String userId) {
-        String response = profileFacadeService.compareLimit(userId);
-        return ResponseEntity.ok().body(response);
-    }
-    
-    @Operation(summary = "goal 비교", description = "목표 금액과 account balance 비교")
-    @GetMapping("/co-goal")
-    public ResponseEntity<String> coGoal(@AuthenticationPrincipal String userId) {
-        String response = profileFacadeService.compareGoal(userId);
-        return ResponseEntity.ok().body(response);
-    }
+
 }
