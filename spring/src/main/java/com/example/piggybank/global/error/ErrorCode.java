@@ -15,8 +15,9 @@ public enum ErrorCode {
 
   EMAIL_DUPLICATION(400, "U001", "Email is Duplicated"),
   USER_NOT_FOUND(404, "U002", "User Not Found"),
-  PASSWORD_NOT_MATCH(400, "U003", "Password Not Match"),
-  
+  LOGIN_FAILED(401, "U003", "Login Failed"), // <-- 추가
+  PASSWORD_NOT_MATCH(400, "U004", "Password Not Match"), // <-- 코드 변경
+
   PROFILE_DUPLICATION(400, "P001", "Profile Duplication"),
 
   CATEGORY_NOT_FOUND(404, "CT001", "Category Not Found"),

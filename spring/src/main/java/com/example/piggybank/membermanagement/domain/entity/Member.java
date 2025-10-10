@@ -1,7 +1,5 @@
 package com.example.piggybank.membermanagement.domain.entity;
 
-import static com.example.piggybank.global.common.Status.DELETED;
-
 import com.example.piggybank.global.common.BaseTimeEntity;
 import com.example.piggybank.global.common.Status;
 import jakarta.persistence.*;
@@ -30,16 +28,15 @@ public class Member extends BaseTimeEntity {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-//    @Embedded
-//    private Profile profile;
-
+    @Enumerated(EnumType.STRING)
     @Column(name = "`role`", nullable = false)
-    private int role; // 0: ADMIN, 1: USER
+    private MemberRole role;
 
     @Version
     private Long version;
 
-    public Member(String email, String password, String phoneNumber, int role) {
+    @Builder
+    public Member(String email, String password, String phoneNumber, MemberRole role) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
@@ -50,7 +47,7 @@ public class Member extends BaseTimeEntity {
         this.password = newPassword;
     }
 
-    public void softDelete(UUID userId) {
-        this.status = DELETED;
+    public void softDelete() {
+        this.status = Status.DELETED;
     }
 }
