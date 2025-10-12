@@ -3,7 +3,6 @@ package com.example.piggybank.membermanagement.domain.service.command;
 import com.example.piggybank.global.security.JwtTokenProvider;
 import com.example.piggybank.membermanagement.api.dto.response.TokenResponse;
 import com.example.piggybank.membermanagement.domain.entity.Member;
-import com.example.piggybank.membermanagement.domain.entity.MemberRole;
 import com.example.piggybank.membermanagement.infrastructure.repository.MemberRepository;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +18,17 @@ public class MemberCommandServiceImpl implements MemberCommandService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Override
     public Member createMember(String email, String password, String phoneNumber, MemberRole role) {
         Member member = Member.builder()
                 .email(email)
                 .password(password)
                 .phoneNumber(phoneNumber)
-                .role(role)
+                .role(1)
                 .build();
 
         return memberRepository.save(member);
     }
 
-    @Override
     public TokenResponse generateToken(UUID userId, String email) {
         String token = jwtTokenProvider.createToken(
                 userId,
@@ -44,7 +41,6 @@ public class MemberCommandServiceImpl implements MemberCommandService {
         );
     }
 
-    @Override
     public boolean validatePassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }

@@ -9,7 +9,6 @@ import com.example.piggybank.membermanagement.api.dto.request.SignUpRequest;
 import com.example.piggybank.membermanagement.api.dto.request.UserUpdateRequest;
 import com.example.piggybank.membermanagement.api.dto.response.TokenResponse;
 import com.example.piggybank.membermanagement.domain.entity.Member;
-import com.example.piggybank.membermanagement.domain.entity.MemberRole;
 import com.example.piggybank.membermanagement.domain.service.command.MemberCommandService;
 import com.example.piggybank.membermanagement.domain.service.query.MemberQueryService;
 import com.example.piggybank.membermanagement.event.MemberCreatedEvent;
@@ -79,7 +78,7 @@ public class MemberFacadeServiceImpl {
                 request.email(),
                 encodePassword,
                 request.phoneNumber(),
-                MemberRole.USER
+                1
         );
 
         UUID userId = memberQueryService.findByEmail(request.email()).get().getUserId();
