@@ -30,13 +30,12 @@ public class Member extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "`role`", nullable = false)
-    private MemberRole role;
+    private int role; // 0: ADMIN, 1: USER
 
     @Version
     private Long version;
 
-    @Builder
-    public Member(String email, String password, String phoneNumber, MemberRole role) {
+    public Member(String email, String password, String phoneNumber, int role) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
