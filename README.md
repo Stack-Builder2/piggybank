@@ -78,9 +78,10 @@
 
 | 이름 | 역할 | 주요 기여 영역 |
 |------|------|----------------|
-| **오재근** | Backend | Account(계좌 저장 및 CodeF ConnectedId 저장), Transaction(거래내역 조회 및 저장), Auth(회원 관리), Profile(소비 한도 및 목표 금액 설정 및 비교), CODEF, JWT 인증 구조 설계 |
-| **배수빈** | Backend / DevOps | Category(소비 분석), Transaction(카테고리 통계), Member(비밀번호 변경)<br>Redis/Docker 환경 설정, Python FastAPI 연결, Global 모듈(email, external) |
-| **옥진서** | Backend | Member 관리, 로그인/회원가입 인증 기능 구현 |
+| **오​재​근** | Backend | Account, Transaction, CODEF, JWT 인증 구조 설계 |
+| **배​수​빈** | Backend / DevOps | Category(소비 분석), Transaction(카테고리 통계), Member(비밀번호 변경), Redis/Docker 환경 설정 |
+| **옥​진​서** | Backend | Member 관리, 로그인/회원가입 인증 기능 구현 |
+
 
 ---
 
